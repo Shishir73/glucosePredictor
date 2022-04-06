@@ -1,6 +1,14 @@
 # glucose_predictor
 
-A new Flutter project.
+A Flutter project to predict glucose level using images.
+
+
+## Design
+
+This project is being build on the basis of figma design found here:
+
+- [Figma Prototype](https://www.figma.com/file/hhGVJOR1igYeJkYMQ8RyrM/MockupOfApp?node-id=794%3A3659)
+
 
 ## Getting Started
 
