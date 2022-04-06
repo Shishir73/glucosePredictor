@@ -1,15 +1,20 @@
+import 'package:camera/camera.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/pages/homePage.dart';
 import 'package:glucose_predictor/pages/settingsPage.dart';
-import 'package:glucose_predictor/pages/takeImgPage.dart';
+import 'package:glucose_predictor/pages/TakeImgPage.dart';
 
-void main() {
-  runApp(const MyApp());
+List<CameraDescription> cameras = [];
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+  runApp(const GlucoseApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class GlucoseApp extends StatelessWidget {
+  const GlucoseApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +26,18 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(title: 'Predict Glucose'),
     );
   }
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 
 class _MyHomePageState extends State<MyHomePage> {
-  int index = 1;
+  int index = 0;
 
   final screens = [
-    HomePage(),
-    TakeImgPage(),
+    const HomePage(),
+    const TakeImgPage(),
     SettingsPage(),
   ];
 
@@ -42,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
 
     return Container(
-        color: Colors.red,
+        // color: Colors.red,
         child:SafeArea(
             top: false,
             child: Scaffold(

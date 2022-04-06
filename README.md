@@ -1,4 +1,4 @@
-# glucose_predictor
+# Glucose Predictor
 
 A Flutter project to predict glucose level using images.
 
