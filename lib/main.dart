@@ -55,17 +55,14 @@ class _MyHomePageState extends State<MyHomePage> {
             top: false,
             child: Scaffold(
               extendBody: true,
-              backgroundColor: Colors.red,
-              appBar: AppBar(
-                title: Text(widget.title),
-              ),
+              backgroundColor: Colors.white,
               body: screens[index],
               bottomNavigationBar: Theme(
                 data: Theme.of(context).copyWith(
                   iconTheme: const IconThemeData(color: Colors.black),
                 ), child: CurvedNavigationBar(
-                color: Color(0Xffe6ffe5),
-                buttonBackgroundColor: Colors.green,
+                color: const Color(0Xffe6ffe5),
+                buttonBackgroundColor: const Color(0Xffe6ffe5),
                 backgroundColor: Colors.transparent,
                 height: 50,
                 items: itemList,

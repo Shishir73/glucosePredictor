@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/main.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import '../main.dart';
-import 'GalleryScreen.dart';
+import 'ConfirmScreen.dart';
 
 class TakeImgPage extends StatefulWidget {
   const TakeImgPage({Key? key}) : super(key: key);
@@ -18,7 +18,9 @@ class _CameraAppState extends State<TakeImgPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
   int selectedCamera = 0;
-  List<File> capturedImages = [];
+  final ImagePicker _picker = ImagePicker();
+  late XFile capturedImage;
+  File? _galleryImage;
 
   initializeCamera(int selectedCamera) async {
     _controller =
@@ -28,8 +30,14 @@ class _CameraAppState extends State<TakeImgPage> {
 
   @override
   void initState() {
-    initializeCamera(0);
     super.initState();
+    _controller = CameraController(cameras[0], ResolutionPreset.medium);
+    _controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
   }
 
   @override
@@ -38,98 +46,76 @@ class _CameraAppState extends State<TakeImgPage> {
     super.dispose();
   }
 
+  Future openGallery() async {
+    final image = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _galleryImage = image as File?;
+    });
+  }
+
+  void takePhoto() async {
+    XFile takePic = await _controller.takePicture();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => ConfirmScreen(takePic.path)));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        body: Column(children: [
-          FutureBuilder<void>(
-            future: _initializeControllerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                // If the Future is complete, display the preview.
-                return CameraPreview(_controller);
-              } else {
-                // Otherwise, display a loading indicator.
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
+    if (!_controller.value.isInitialized) {
+      return const SizedBox(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return Column(children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(3.0, 90.0, 3.0, 8.0),
+          child: Center(
+            child: SizedBox(
+              height: 460,
+              width: 400,
+              child: CameraPreview(_controller),
+            ),
           ),
-          const Spacer(),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        if (cameras.length > 1) {
-                          setState(() {
-                            selectedCamera = selectedCamera == 0 ? 1 : 0;
-                            initializeCamera(selectedCamera);
-                          });
-                        } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text('No secondary camera found'),
-                            duration: Duration(seconds: 2),
-                          ));
-                        }
-                      },
-                      icon: const Icon(Icons.switch_camera_rounded,
-                          color: Colors.white),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        await _initializeControllerFuture;
-                        var xFile = await _controller.takePicture();
-                        setState(() {
-                          capturedImages.add(File(xFile.path));
-                        });
-                      },
-                      child: Container(
-                        height: 60,
-                        width: 60,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (capturedImages.isEmpty) return;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GalleryScreen(
-                                    images: capturedImages.reversed.toList())));
-                      },
-                      child: Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          image: capturedImages.isNotEmpty
-                              ? DecorationImage(
-                                  image: FileImage(capturedImages.last),
-                                  fit: BoxFit.cover)
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ]))
-        ]));
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0.0, 2.0, 3.0, 3.0),
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white60,
+                shadowColor: Colors.white12,
+                elevation: 100,
+                minimumSize: const Size(5, 5),
+              ),
+              onPressed: openGallery,
+              child: const Icon(
+                Icons.photo,
+                size: 54,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(width: 75, height: 10),
+            MaterialButton(
+              shape: const CircleBorder(),
+              color: Colors.white,
+              padding: const EdgeInsets.all(0.5),
+              onPressed: () {
+                takePhoto();
+                setState(() {});
+              },
+              child: const Icon(
+                Icons.camera,
+                size: 52,
+                color: Colors.grey,
+              ),
+            ),
+          ]),
+        )
+      ]);
+    }
   }
 }
-
-// @override
-// Widget build(BuildContext context) => const Scaffold(
-//   backgroundColor: Colors.grey,
-//   body: Center(
-//     child: Text(
-//       "Take Image",
-//       style: TextStyle(fontSize: 60, color: Colors.white),
-//     ),
-//   ),
-// );
