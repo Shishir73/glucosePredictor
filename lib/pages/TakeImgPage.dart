@@ -20,7 +20,7 @@ class _CameraAppState extends State<TakeImgPage> {
   int selectedCamera = 0;
   final ImagePicker _picker = ImagePicker();
   late XFile capturedImage;
-  File? _galleryImage;
+  late XFile _galleryImage;
 
   initializeCamera(int selectedCamera) async {
     _controller =
@@ -47,10 +47,8 @@ class _CameraAppState extends State<TakeImgPage> {
   }
 
   Future openGallery() async {
-    final image = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _galleryImage = image as File?;
-    });
+    _galleryImage = (await _picker.pickImage(source: ImageSource.gallery))!;
+    Navigator.push(context, MaterialPageRoute(builder: (builder)=> ConfirmScreen(_galleryImage.path)));
   }
 
   void takePhoto() async {
@@ -72,11 +70,11 @@ class _CameraAppState extends State<TakeImgPage> {
     } else {
       return Column(children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(3.0, 90.0, 3.0, 8.0),
+          padding: const EdgeInsets.fromLTRB(3.0, 90.0, 3.0, 3.0),
           child: Center(
             child: SizedBox(
-              height: 460,
-              width: 400,
+              height: MediaQuery.of(context).size.height - 225,
+              width: MediaQuery.of(context).size.width,
               child: CameraPreview(_controller),
             ),
           ),
@@ -98,14 +96,14 @@ class _CameraAppState extends State<TakeImgPage> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(width: 75, height: 10),
+            SizedBox(width: (MediaQuery.of(context).size.width/6), height: 5),
             MaterialButton(
               shape: const CircleBorder(),
               color: Colors.white,
               padding: const EdgeInsets.all(0.5),
               onPressed: () {
                 takePhoto();
-                setState(() {});
+                // setState(() {});
               },
               child: const Icon(
                 Icons.camera,

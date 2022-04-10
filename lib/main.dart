@@ -50,7 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
 
     return Container(
-        // color: Colors.red,
         child:SafeArea(
             top: false,
             child: Scaffold(
