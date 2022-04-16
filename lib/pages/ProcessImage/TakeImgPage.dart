@@ -1,10 +1,8 @@
-import 'dart:io';
+import '../../main.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/main.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import '../main.dart';
 import 'ConfirmScreen.dart';
 
 class TakeImgPage extends StatefulWidget {

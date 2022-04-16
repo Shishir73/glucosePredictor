@@ -1,10 +1,15 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:glucose_predictor/pages/ProcessImage/ApiRequest.dart';
 
 class ConfirmScreen extends StatelessWidget {
-  ConfirmScreen(this.path, {Key? key}) : super(key: key);
-  String path;
+  final String path;
+  const ConfirmScreen(this.path, {Key? key}) : super(key: key);
+
+  Future sendToAPI() async {
+    // _galleryImage = (await _picker.pickImage(source: ImageSource.gallery))!;
+    MaterialPageRoute(builder: (builder)=> ApiRequest(File(path)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,6 @@ class ConfirmScreen extends StatelessWidget {
               shape: const StadiumBorder(),
             ),
             onPressed: (){
-
             },
             child: const Text(
               "Save for Later",
@@ -42,7 +46,9 @@ class ConfirmScreen extends StatelessWidget {
           ),
           SizedBox(width: (MediaQuery.of(context).size.width/2.6), height: 5),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              sendToAPI;
+            },
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal:20.0, vertical: 12.0),
               primary: const Color(0Xff53DB61),
