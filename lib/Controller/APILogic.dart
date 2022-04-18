@@ -44,7 +44,7 @@ Future<Ingredient> uploadImage(File imageFile) async {
 }
 
 Future<Ingredient> requestIng(Map imageID) async {
-  HttpClient httpClient = new HttpClient();
+  HttpClient httpClient = HttpClient();
   HttpClientRequest request = await httpClient
       .postUrl(Uri.parse('https://api.logmeal.es/v2/recipe/ingredients'));
   request.headers.set("Authorization", "Bearer " + token);

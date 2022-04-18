@@ -50,6 +50,10 @@ class ConfirmScreen extends StatelessWidget {
               ),
               onPressed: () {
                 // save the image to DataBase
+                /*Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DatabaseSave(path)));*/
               },
               child: const Text(
                 "Save for Later",
