@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:glucose_predictor/pages/Home/homePage.dart';
-import 'package:glucose_predictor/pages/Settings/SettingsPage.dart';
-import 'package:glucose_predictor/pages/ProcessImage/TakeImgPage.dart';
+import 'package:glucose_predictor/View/Home/homePage.dart';
+import 'package:glucose_predictor/View/Settings/SettingsPage.dart';
+import 'package:glucose_predictor/View/CheckMeal/TakeImgPage.dart';
 
 List<CameraDescription> cameras = [];
 
