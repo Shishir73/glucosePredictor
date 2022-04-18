@@ -20,7 +20,7 @@ class ApiDataView extends StatelessWidget {
             } ,
           ) ,
         ),
-        body: Center (
+        body: SizedBox (
             child: Column(children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
@@ -41,15 +41,37 @@ class ApiDataView extends StatelessWidget {
                   if (snapshot.hasData) {
                     return Column(
                       children: snapshot.data?.recipe
-                              ?.map((e) => Text("${e.name} - ${e.weight}"))
+                              ?.map((e) => Text("${e.name} - ${e.weight}g",
+                            textAlign: TextAlign.right,
+                            style: const TextStyle( fontSize: 20)))
                               .toList() ?? [],
                         );
                       } else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       }
                       return const CircularProgressIndicator();
-                    },
+                  },
                   ),
+              SizedBox(
+                  width: (MediaQuery.of(context).size.width / 2.6), height: 70),
+              ElevatedButton(
+                onPressed: () {
+                  /* Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditIngredients()));*/
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 25.0, vertical: 12.0),
+                  primary: const Color(0Xff4CA4D6),
+                  shape: const StadiumBorder(),
+                ),
+                child: const Text(
+                  "Edit Ingredients",
+                  style: TextStyle(color: Colors.white, fontSize: 17),
+                ),
+              ),
             ])
         ),
         );

@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final screens = [
     const HomePage(),
     const TakeImgPage(),
-    SettingsPage(),
+    const SettingsPage(),
   ];
 
   @override
