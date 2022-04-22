@@ -12,6 +12,8 @@ class ConfirmScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        title: const Text('Confirm Image',style: TextStyle(color: Color(0xff909090))),
+        centerTitle: true,
         elevation: 0,
         leading: GestureDetector(
           child: const Icon(

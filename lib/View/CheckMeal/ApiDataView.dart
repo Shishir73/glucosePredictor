@@ -35,7 +35,6 @@ class ApiDataView extends StatelessWidget {
           child: Column(children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
-          child: Center(
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 500,
@@ -44,50 +43,48 @@ class ApiDataView extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-          ),
-        ),
-        FutureBuilder<Ingredient>(
-          future: getIngredients(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: snapshot.data?.recipe?.map((e) => ListTile(
-                                  title: Text("${e.name}"),
-                                  trailing: Text(" ~ ${e.weight}"),
-                                  tileColor: const Color(0XffFEF1F1),
-                                )
-                            // Text("${e.name} - ${e.weight}g", style: const TextStyle(fontSize: 20))
-                            )
-                        .toList() ??
-                [],
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-            return const CircularProgressIndicator();
-          },
-        ),
-        SizedBox(width: (MediaQuery.of(context).size.width / 2.6), height: 10),
-        ElevatedButton(
-          onPressed: () {
-            /* Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditIngredients()));*/
-          },
-          style: ElevatedButton.styleFrom(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 25.0, vertical: 12.0),
-            primary: const Color(0Xff4CA4D6),
-            shape: const StadiumBorder(),
-          ),
-          child: const Text(
-            "Edit Ingredients",
-            style: TextStyle(color: Colors.white, fontSize: 17),
-          ),
-        ),
+        ), Flexible(child: _buildListView()),
+
       ])),
+    );
+  }
+
+  Widget _buildListView() {
+    return FutureBuilder<Ingredient>(
+      future: getIngredients(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView(
+              padding: const EdgeInsets.fromLTRB(60.0,2.0,60.0,45.0),
+              children: [ Container(
+                child: Column(
+                  children: snapshot.data?.recipe?.map((e) => ListTile(
+                    title: Text("${e.name}"),
+                    trailing: Text(" ~${e.weight}gram"),
+                    // tileColor: const Color(0XffFEF1F1),
+                  )).toList() ?? [],
+                ),
+              ),
+                const SizedBox(height: 30.0,width: 10.0),
+                SizedBox(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 10.0),
+                    primary: const Color(0Xff4CA4D6),
+                    shape: const StadiumBorder(),
+                  ),
+                  child: const Text(
+                    "Edit Ingredients",
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
+                )),
+              ]);
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+        return const CircularProgressIndicator();
+      },
     );
   }
 }
