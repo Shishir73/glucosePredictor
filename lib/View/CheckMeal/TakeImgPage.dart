@@ -1,9 +1,12 @@
+import 'package:glucose_predictor/Controller/APILogic.dart';
+
 import '../../main.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'ConfirmScreen.dart';
+import 'dart:io';
 
 class TakeImgPage extends StatefulWidget {
   const TakeImgPage({Key? key}) : super(key: key);

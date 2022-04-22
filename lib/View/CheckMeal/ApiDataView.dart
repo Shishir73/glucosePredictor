@@ -7,6 +7,12 @@ class ApiDataView extends StatelessWidget {
   final String imageFile;
   const ApiDataView(this.imageFile, {Key? key}) : super(key: key);
 
+  Future<Ingredient> getIngredients() async {
+    var f = await File(imageFile).readAsBytes();
+   return  uploadImage(f);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +42,8 @@ class ApiDataView extends StatelessWidget {
                 ),
               ),
               FutureBuilder<Ingredient>(
-                future: uploadImage(File(imageFile)),
+                future: getIngredients(),
+                // uploadImage(File(imageFile)),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Column(
