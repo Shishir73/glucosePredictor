@@ -32,7 +32,7 @@ class _CameraAppState extends State<TakeImgPage> {
   @override
   void initState() {
     super.initState();
-    _controller = CameraController(cameras[0], ResolutionPreset.medium);
+    _controller = CameraController(cameras[0], ResolutionPreset.low);
     _controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -54,10 +54,7 @@ class _CameraAppState extends State<TakeImgPage> {
 
   void takePhoto() async {
     XFile takePic = await _controller.takePicture();
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (builder) => ConfirmScreen(takePic.path)));
+    Navigator.push(context, MaterialPageRoute(builder: (builder) => ConfirmScreen(takePic.path)));
   }
 
   @override
@@ -102,10 +99,7 @@ class _CameraAppState extends State<TakeImgPage> {
               shape: const CircleBorder(),
               color: Colors.white,
               padding: const EdgeInsets.all(0.5),
-              onPressed: () {
-                takePhoto();
-                // setState(() {});
-              },
+              onPressed: takePhoto,
               child: const Icon(
                 Icons.camera,
                 size: 52,

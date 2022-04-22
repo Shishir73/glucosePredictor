@@ -4,8 +4,8 @@ import 'dart:typed_data';
 import 'package:glucose_predictor/Model/Ingredient.dart';
 import 'package:http/http.dart' as http;
 
-String token = "f98b8c50b0d51baf315302c6440667c82cd1e4bf"; // Shishir user
-// String token = "c558895bd0568912d58f26d060cc3682704ecb35";
+// String token = "f98b8c50b0d51baf315302c6440667c82cd1e4bf"; // Shishir user
+String token = "c558895bd0568912d58f26d060cc3682704ecb35";
 // String token = "dda82fe5c6e2e1342bb42d67230460f565e8c5af";
 // String token = "683c51d5d4df3708dd550f5e784905208cdbafba";
 // String token = "96d710827473b0b7b9854cf5999da86322da0c22";
@@ -26,6 +26,7 @@ Future<Ingredient> uploadImage(Uint8List imageFile) async {
   Map data = {'imageId': imgID['imageId']};
 
   Ingredient ingData = await requestIng(data);
+  print("DATA RETURNED - " + ingData.toString());
   return ingData;
 }
 

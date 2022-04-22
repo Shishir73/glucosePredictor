@@ -50,10 +50,6 @@ class ConfirmScreen extends StatelessWidget {
               ),
               onPressed: () {
                 // save the image to DataBase
-                /*Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DatabaseSave(path)));*/
               },
               child: const Text(
                 "Save for Later",
@@ -64,10 +60,7 @@ class ConfirmScreen extends StatelessWidget {
                 width: (MediaQuery.of(context).size.width / 2.6), height: 5),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ApiDataView(path)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ApiDataView(path)));
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
