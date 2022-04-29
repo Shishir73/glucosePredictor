@@ -3,7 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/main.dart';
 import 'package:image_picker/image_picker.dart';
-import 'ConfirmScreen.dart';
+import 'confirmScreen.dart';
 
 class TakeImgPage extends StatefulWidget {
   const TakeImgPage({Key? key}) : super(key: key);
@@ -63,9 +63,16 @@ class _CameraAppState extends State<TakeImgPage> {
         ),
       );
     } else {
-      return Column(children: [
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Text("Take Image", style: TextStyle(color: Color(0xff909090))),
+          centerTitle: true,
+          elevation: 0,
+        ),
+        body: Column(children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(3.0, 90.0, 3.0, 3.0),
+          padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
           child: Center(
             child: SizedBox(
               height: MediaQuery.of(context).size.height - 225,
@@ -91,7 +98,7 @@ class _CameraAppState extends State<TakeImgPage> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(width: (MediaQuery.of(context).size.width/6), height: 5),
+            SizedBox(width: (MediaQuery.of(context).size.width/6.2), height: 5),
             MaterialButton(
               shape: const CircleBorder(),
               color: Colors.white,
@@ -105,7 +112,7 @@ class _CameraAppState extends State<TakeImgPage> {
             ),
           ]),
         )
-      ]);
+        ]));
     }
   }
 }

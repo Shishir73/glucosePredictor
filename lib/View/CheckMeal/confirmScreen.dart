@@ -1,18 +1,32 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:glucose_predictor/View/CheckMeal/ApiDataView.dart';
+import 'package:glucose_predictor/Model/DraftImage.dart';
+import 'package:glucose_predictor/View/CheckMeal/apiDataView.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:intl/intl.dart';
 
 class ConfirmScreen extends StatelessWidget {
   final String path;
 
   const ConfirmScreen(this.path, {Key? key}) : super(key: key);
 
+  saveAsDraft() async {
+    String imgName = DateFormat("Hms").format(DateTime.now());
+    Uint8List fPic = await File(path).readAsBytes();
+    final nyFood = DraftImage(imgName, fPic);
+    print("FILE NAME: ${nyFood.fileName}");
+    final draftBox = Hive.box<DraftImage>("DraftImage");
+    return draftBox.add(nyFood);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Confirm Image',style: TextStyle(color: Color(0xff909090))),
+        title: const Text('Confirm Image',
+            style: TextStyle(color: Color(0xff909090))),
         centerTitle: true,
         elevation: 0,
         leading: GestureDetector(
@@ -50,8 +64,9 @@ class ConfirmScreen extends StatelessWidget {
                 primary: const Color(0Xff53B2DB),
                 shape: const StadiumBorder(),
               ),
-              onPressed: () {
-                // save the image to DataBase
+              onPressed: () async {
+                await saveAsDraft();
+                Navigator.pop(context);
               },
               child: const Text(
                 "Save for Later",
@@ -62,7 +77,8 @@ class ConfirmScreen extends StatelessWidget {
                 width: (MediaQuery.of(context).size.width / 2.6), height: 5),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ApiDataView(path)));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ApiDataView(path)));
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(

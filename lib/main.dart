@@ -1,15 +1,22 @@
 import 'package:camera/camera.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/Home/homePage.dart';
 import 'package:glucose_predictor/View/Settings/SettingsPage.dart';
-import 'package:glucose_predictor/View/CheckMeal/TakeImgPage.dart';
+import 'package:glucose_predictor/View/CheckMeal/takeImgPage.dart';
+import 'package:hive_flutter/adapters.dart';
 
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
+
+  // Initializing Hive Database.
+  await Hive.initFlutter();
+  Hive.registerAdapter(DraftImageAdapter());
+
   runApp(const GlucoseApp());
 }
 
@@ -73,6 +80,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),),)
         ));
   }
+
+  @override
+  void dispose() {
+    // Hive.box('DraftImage').compact();
+    Hive.close();
+    super.dispose();
+  }
+
 }
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);

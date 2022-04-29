@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:glucose_predictor/Controller/APILogic.dart';
+import 'package:glucose_predictor/Controller/aPILogic.dart';
 import 'package:glucose_predictor/Model/Ingredient.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class ApiDataView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Ingredient Contains',style: TextStyle(color: Color(0xff909090))),
+        title: const Text('Ingredient Contain',style: TextStyle(color: Color(0xff909090))),
         centerTitle: true,
         elevation: 0,
         leading: GestureDetector(
@@ -61,7 +61,6 @@ class ApiDataView extends StatelessWidget {
                   children: snapshot.data?.recipe?.map((e) => ListTile(
                     title: Text("${e.name}"),
                     trailing: Text(" ~${e.weight}gram"),
-                    // tileColor: const Color(0XffFEF1F1),
                   )).toList() ?? [],
                 ),
               ),
