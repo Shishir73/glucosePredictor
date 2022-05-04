@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../main.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _CameraAppState extends State<TakeImgPage> {
 
   initializeCamera(int selectedCamera) async {
     _controller =
-        CameraController(cameras[selectedCamera], ResolutionPreset.medium);
+        CameraController(cameras[selectedCamera], ResolutionPreset.high);
     _initializeControllerFuture = _controller.initialize();
   }
 
@@ -46,12 +47,16 @@ class _CameraAppState extends State<TakeImgPage> {
 
   Future openGallery() async {
     _galleryImage = (await _picker.pickImage(source: ImageSource.gallery))!;
-    Navigator.push(context, MaterialPageRoute(builder: (builder)=> ConfirmScreen(_galleryImage.path)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => ConfirmScreen(_galleryImage.path)));
   }
 
   void takePhoto() async {
     XFile takePic = await _controller.takePicture();
-    Navigator.push(context, MaterialPageRoute(builder: (builder) => ConfirmScreen(takePic.path)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (builder) => ConfirmScreen(takePic.path)));
   }
 
   @override
@@ -64,55 +69,58 @@ class _CameraAppState extends State<TakeImgPage> {
       );
     } else {
       return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: const Text("Take Image", style: TextStyle(color: Color(0xff909090))),
-          centerTitle: true,
-          elevation: 0,
-        ),
-        body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
-          child: Center(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height - 225,
-              width: MediaQuery.of(context).size.width,
-              child: CameraPreview(_controller),
-            ),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: const Text("Take Image",
+                style: TextStyle(color: Color(0xff909090))),
+            centerTitle: true,
+            elevation: 0,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0.0, 2.0, 3.0, 3.0),
-          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white60,
-                shadowColor: Colors.white12,
-                elevation: 100,
-                minimumSize: const Size(5, 5),
-              ),
-              onPressed: openGallery,
-              child: const Icon(
-                Icons.photo,
-                size: 54,
-                color: Colors.black,
+          body: Column(children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
+              child: Center(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height - 225,
+                  width: MediaQuery.of(context).size.width,
+                  child: CameraPreview(_controller),
+                ),
               ),
             ),
-            SizedBox(width: (MediaQuery.of(context).size.width/6.2), height: 5),
-            MaterialButton(
-              shape: const CircleBorder(),
-              color: Colors.white,
-              padding: const EdgeInsets.all(0.5),
-              onPressed: takePhoto,
-              child: const Icon(
-                Icons.camera,
-                size: 52,
-                color: Colors.grey,
-              ),
-            ),
-          ]),
-        )
-        ]));
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 2.0, 3.0, 3.0),
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white60,
+                    shadowColor: Colors.white12,
+                    elevation: 100,
+                    minimumSize: const Size(5, 5),
+                  ),
+                  onPressed: openGallery,
+                  child: const Icon(
+                    Icons.photo,
+                    size: 54,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                    width: (MediaQuery.of(context).size.width / 6.2),
+                    height: 5),
+                MaterialButton(
+                  shape: const CircleBorder(),
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(0.5),
+                  onPressed: takePhoto,
+                  child: const FaIcon(
+                    FontAwesomeIcons.circle,
+                    size: 52,
+                    color: Colors.grey,
+                  ),
+                ),
+              ]),
+            )
+          ]));
     }
   }
 }
