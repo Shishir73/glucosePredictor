@@ -16,12 +16,10 @@ var token = [
   "c558895bd0568912d58f26d060cc3682704ecb35",
   "dda82fe5c6e2e1342bb42d67230460f565e8c5af",
   "a43b878ca923996795a1fa0d13b51b89b92ce204",
-
 ];
 var tokenIndex = 0;
 
 Future<Ingredient> uploadImage(Uint8List imageFile) async {
-
     var uri1 = Uri.parse("https://api.logmeal.es/v2/recognition/complete");
     var request = http.MultipartRequest("POST", uri1);
     request.fields['title'] = "dummyData";
