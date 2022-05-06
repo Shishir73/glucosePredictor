@@ -55,7 +55,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(child: _buildListView()),
-            const SizedBox(width: 20, height: 40),
+            const SizedBox(width: 20, height: 45),
           ],
         ),
       ),
