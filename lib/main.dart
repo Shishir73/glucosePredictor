@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 iconSize: 27.0,
                 elevation: 0,
                 selectedColor: const Color(0xff000000),
-                strokeColor: const Color(0Xff000000),
+                strokeColor: const Color(0xff000000),
                 unSelectedColor: Colors.grey[400],
                 backgroundColor: const Color(0xffFFFFFF), // E6FFE5
                 // borderRadius: const Radius.circular(30.0),

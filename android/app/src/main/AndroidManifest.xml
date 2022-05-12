@@ -3,7 +3,7 @@
    <application
         android:label="Glucose Predictor"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/glucoseapplogo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

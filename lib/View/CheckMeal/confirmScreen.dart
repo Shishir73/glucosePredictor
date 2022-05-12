@@ -91,7 +91,7 @@ class ConfirmScreen extends StatelessWidget {
 
   _saveAsDraft(BuildContext context) async {
 
-      String imgName = DateFormat("Hms").format(DateTime.now());
+      String imgName = DateFormat("H:mm, d MMM yyyy").format(DateTime.now());
       Uint8List fPic = await File(path).readAsBytes();
       final nyFood = DraftImage(imgName, fPic);
       print("FILE NAME: ${nyFood.fileName}");

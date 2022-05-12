@@ -68,6 +68,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
         builder: (context, Box<DraftImage> dradtImgBox, _) {
           return ListView.builder(
               itemCount: dradtImgBox.length,
+              reverse: true,
               itemBuilder: (context, index) {
                 final draftBox = dradtImgBox.getAt(index) as DraftImage;
                 return ListTile(
