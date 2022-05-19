@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "117356030642",
+    "project_id": "glucosepredictor",
+    "storage_bucket": "glucosepredictor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117356030642:android:a53af91724b992124037ab",
+        "android_client_info": {
+          "package_name": "com.example.database_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "117356030642-bc9697hhj5427t6gvjv43gs9ah3ou7q9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDENgwBfreFVKdK0vC39sUC7laM8eOmTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "117356030642-bc9697hhj5427t6gvjv43gs9ah3ou7q9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117356030642:android:1e0be0e7602581374037ab",
+        "android_client_info": {
+          "package_name": "com.example.thesis.glucose_predictor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "117356030642-bc9697hhj5427t6gvjv43gs9ah3ou7q9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDENgwBfreFVKdK0vC39sUC7laM8eOmTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "117356030642-bc9697hhj5427t6gvjv43gs9ah3ou7q9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

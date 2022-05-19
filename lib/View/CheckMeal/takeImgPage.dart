@@ -23,14 +23,14 @@ class _CameraAppState extends State<TakeImgPage> {
 
   initializeCamera(int selectedCamera) async {
     _controller =
-        CameraController(cameras[selectedCamera], ResolutionPreset.high);
+        CameraController(cameras[selectedCamera], ResolutionPreset.medium);
     _initializeControllerFuture = _controller.initialize();
   }
 
   @override
   void initState() {
     super.initState();
-    _controller = CameraController(cameras[0], ResolutionPreset.low);
+    _controller = CameraController(cameras[0], ResolutionPreset.medium);
     _controller.initialize().then((_) {
       if (!mounted) {
         return;

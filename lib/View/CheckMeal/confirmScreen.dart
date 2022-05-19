@@ -21,14 +21,12 @@ class ConfirmScreen extends StatelessWidget {
             style: TextStyle(color: Color(0xff909090))),
         centerTitle: true,
         elevation: 0,
-        leading: GestureDetector(
-          child: const Icon(
+        leading: IconButton(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
-          onTap: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Center(
@@ -90,19 +88,19 @@ class ConfirmScreen extends StatelessWidget {
   }
 
   _saveAsDraft(BuildContext context) async {
+    String imgName = DateFormat("H:mm, d MMM yyyy").format(DateTime.now());
+    Uint8List fPic = await File(path).readAsBytes();
+    final nyFood = DraftImage(imgName, fPic);
+    print("FILE NAME: ${nyFood.fileName}");
+    final draftBox = Hive.box<DraftImage>("DraftImage");
+    draftBox.add(nyFood);
 
-      String imgName = DateFormat("H:mm, d MMM yyyy").format(DateTime.now());
-      Uint8List fPic = await File(path).readAsBytes();
-      final nyFood = DraftImage(imgName, fPic);
-      print("FILE NAME: ${nyFood.fileName}");
-      final draftBox = Hive.box<DraftImage>("DraftImage");
-      draftBox.add(nyFood);
-
-      return showPlatformDialog(
+    return showPlatformDialog(
       context: context,
       builder: (_) => BasicDialogAlert(
         title: const Text("Image Saved 😊"),
-        content: const Text("The image has been saved.\nYou can view it on home screen."),
+        content: const Text(
+            "The image has been saved.\nYou can view it on home screen."),
         actions: <Widget>[
           BasicDialogAction(
             title: const Text("OK"),
@@ -114,5 +112,4 @@ class ConfirmScreen extends StatelessWidget {
       ),
     );
   }
-
 }

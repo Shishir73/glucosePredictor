@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
@@ -17,6 +18,9 @@ Future<void> main() async {
   // Initializing Hive Database.
   await Hive.initFlutter();
   Hive.registerAdapter(DraftImageAdapter());
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   runApp(const GlucoseApp());
 }
@@ -75,8 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 strokeColor: const Color(0xff000000),
                 unSelectedColor: Colors.grey[400],
                 backgroundColor: const Color(0xffFFFFFF), // E6FFE5
-                // borderRadius: const Radius.circular(30.0),
-                // isFloating: true,
                 currentIndex: index,
                 items: itemList,
                 onTap: (index) => setState(() {
@@ -88,7 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    // Hive.box('DraftImage').compact();
     Hive.close();
     super.dispose();
   }
