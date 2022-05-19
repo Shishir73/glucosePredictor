@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:glucose_predictor/Model/ManualIngInput.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -12,6 +14,8 @@ class ManualPageView extends StatefulWidget {
 class _ManualPageView extends State<ManualPageView> {
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
   final ManualInput manualInput = ManualInput("", List<Ing>.empty(growable: true),);
+  CollectionReference addInputData = FirebaseFirestore.instance.collection('manualInput');
+
 
   @override
   void initState() {
@@ -100,6 +104,7 @@ class _ManualPageView extends State<ManualPageView> {
                       "Save",
                           () async {
                         if (validateAndSave()) {
+                          addInputData.add(manualInput.toJson());
                           print(manualInput.toJson());
                         }
                       },
