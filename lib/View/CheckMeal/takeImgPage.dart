@@ -1,4 +1,5 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:glucose_predictor/service/firebase.service.dart';
 import '../../main.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _CameraAppState extends State<TakeImgPage> {
   final ImagePicker _picker = ImagePicker();
   late XFile capturedImage;
   late XFile _galleryImage;
+
 
   initializeCamera(int selectedCamera) async {
     _controller =
@@ -51,12 +53,15 @@ class _CameraAppState extends State<TakeImgPage> {
         context,
         MaterialPageRoute(
             builder: (builder) => ConfirmScreen(_galleryImage.path)));
+    FirebaseService().uploadimage(_galleryImage) ;
   }
+
 
   void takePhoto() async {
     XFile takePic = await _controller.takePicture();
     Navigator.push(context,
         MaterialPageRoute(builder: (builder) => ConfirmScreen(takePic.path)));
+    print(FirebaseService().uploadimage(takePic));
   }
 
   @override
@@ -98,7 +103,7 @@ class _CameraAppState extends State<TakeImgPage> {
                     minimumSize: const Size(5, 5),
                   ),
                   onPressed: openGallery,
-                  child: const Icon(
+                  child: const FaIcon(
                     Icons.photo,
                     size: 54,
                     color: Colors.black,

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import '../CheckMeal/apiDataView.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,6 +43,9 @@ class HomeTimelineView extends StatefulWidget {
 }
 
 class _HomeTimelineView extends State<HomeTimelineView> {
+  String get imageFile => '' ;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +68,10 @@ class _HomeTimelineView extends State<HomeTimelineView> {
     );
   }
 
+
+
   Widget _buildListView() {
+    String txt='';
     return ValueListenableBuilder(
         valueListenable: Hive.box<DraftImage>('DraftImage').listenable(),
         builder: (context, Box<DraftImage> dradtImgBox, _) {
@@ -76,6 +85,9 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                     subtitle: const Text("Quick Saved", style: TextStyle(color: Colors.blueGrey)),
                   contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   visualDensity: const VisualDensity(horizontal: 0, vertical: 4),
+                  onTap:(){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ApiDataView(imageFile)));
+                  },
                   trailing: SizedBox(
                     width: 50,
                     child: Row(
@@ -85,6 +97,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                               dradtImgBox.deleteAt(index);
                             },
                             icon: const Icon(Icons.delete_forever_rounded))
+
                       ],
                     ),
                   ),
