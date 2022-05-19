@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final itemList = <CustomNavigationBarItem>[
       CustomNavigationBarItem( icon: const Icon(CupertinoIcons.home)),
-      CustomNavigationBarItem( icon: const Icon(CupertinoIcons.search)), // Icons.bubble_chart
+      CustomNavigationBarItem( icon: const Icon(CupertinoIcons.add_circled)), // Icons.bubble_chart
       CustomNavigationBarItem( icon: const Icon(CupertinoIcons.gear_alt)),
     ];
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/CheckMeal/apiDataView.dart';
+import 'package:glucose_predictor/View/ManualInputPage.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +29,15 @@ class ConfirmScreen extends StatelessWidget {
           ),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: <Widget>[IconButton(
+          icon: const Icon(Icons.add_moderator_outlined,color: Colors.black,),
+          tooltip: 'Enter Manual Value',
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ManualPageView()));
+          },
+        ),
+        ],
       ),
       body: Center(
           child: Column(children: [
