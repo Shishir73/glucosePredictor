@@ -1,24 +1,17 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
+import 'package:glucose_predictor/Controller/firebaseService.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/CheckMeal/apiDataView.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 
 class ConfirmScreen extends StatelessWidget {
-  final String path;
+  final String imagePath;
 
-  const ConfirmScreen(this.path, {Key? key}) : super(key: key);
-
-  saveAsDraft() async {
-    String imgName = DateFormat("Hms").format(DateTime.now());
-    Uint8List fPic = await File(path).readAsBytes();
-    final nyFood = DraftImage(imgName, fPic);
-    print("FILE NAME: ${nyFood.fileName}");
-    final draftBox = Hive.box<DraftImage>("DraftImage");
-    return draftBox.add(nyFood);
-  }
+  const ConfirmScreen(this.imagePath, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +41,7 @@ class ConfirmScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 225,
               child: Image.file(
-                File(path),
+                File(imagePath),
                 fit: BoxFit.cover,
               ),
             ),
@@ -65,7 +58,7 @@ class ConfirmScreen extends StatelessWidget {
                 shape: const StadiumBorder(),
               ),
               onPressed: () async {
-                await saveAsDraft();
+                await _saveAsDraft(context);
                 Navigator.pop(context);
               },
               child: const Text(
@@ -76,9 +69,8 @@ class ConfirmScreen extends StatelessWidget {
             SizedBox(
                 width: (MediaQuery.of(context).size.width / 2.6), height: 5),
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ApiDataView(path)));
+              onPressed: () async {
+                await _confirmImg(context);
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
@@ -94,6 +86,37 @@ class ConfirmScreen extends StatelessWidget {
           ]),
         )
       ])),
+    );
+  }
+
+  _confirmImg(BuildContext context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ApiDataView(imagePath)));
+  }
+
+  _saveAsDraft(BuildContext context) async {
+    String imgName = DateFormat("H:mm, d MMM yyyy").format(DateTime.now());
+    Uint8List fPic = await File(imagePath).readAsBytes();
+    final nyFood = DraftImage(imgName, fPic);
+    print("FILE NAME: ${nyFood.fileName}");
+    final draftBox = Hive.box<DraftImage>("DraftImage");
+    draftBox.add(nyFood);
+
+    return showPlatformDialog(
+      context: context,
+      builder: (_) => BasicDialogAlert(
+        title: const Text("Image Saved 😊"),
+        content: const Text(
+            "The image has been saved.\nYou can view it on home screen."),
+        actions: <Widget>[
+          BasicDialogAction(
+            title: const Text("OK"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

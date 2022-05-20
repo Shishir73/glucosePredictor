@@ -1,11 +1,13 @@
 import 'package:camera/camera.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/Home/homePage.dart';
 import 'package:glucose_predictor/View/Settings/SettingsPage.dart';
 import 'package:glucose_predictor/View/CheckMeal/takeImgPage.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -16,6 +18,7 @@ Future<void> main() async {
   // Initializing Hive Database.
   await Hive.initFlutter();
   Hive.registerAdapter(DraftImageAdapter());
+  Firebase.initializeApp();
 
   runApp(const GlucoseApp());
 }
@@ -50,10 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final itemList = <Widget>[
-      const Icon(Icons.home, size: 30,),
-      const Icon(Icons.add_circle_outline, size: 30,),
-      const Icon(Icons.settings, size: 30,),
+    final itemList = <CustomNavigationBarItem>[
+      CustomNavigationBarItem( icon: const Icon(CupertinoIcons.home)),
+      CustomNavigationBarItem( icon: const Icon(CupertinoIcons.search)), // Icons.bubble_chart
+      CustomNavigationBarItem( icon: const Icon(CupertinoIcons.gear_alt)),
     ];
 
     return Container(
@@ -66,14 +69,18 @@ class _MyHomePageState extends State<MyHomePage> {
               bottomNavigationBar: Theme(
                 data: Theme.of(context).copyWith(
                   iconTheme: const IconThemeData(color: Colors.black),
-                ), child: CurvedNavigationBar(
-                color: const Color(0Xffe6ffe5),
-                buttonBackgroundColor: const Color(0Xffe6ffe5),
-                backgroundColor: Colors.transparent,
-                height: 50,
+                ), child: CustomNavigationBar(
+                scaleFactor: 0.1,
+                iconSize: 27.0,
+                elevation: 0,
+                selectedColor: const Color(0xff000000),
+                strokeColor: const Color(0xff000000),
+                unSelectedColor: Colors.grey[400],
+                backgroundColor: const Color(0xffFFFFFF), // E6FFE5
+                // borderRadius: const Radius.circular(30.0),
+                // isFloating: true,
+                currentIndex: index,
                 items: itemList,
-                index: index,
-                animationDuration: const Duration(milliseconds: 300),
                 onTap: (index) => setState(() {
                   this.index = index;
                 }),

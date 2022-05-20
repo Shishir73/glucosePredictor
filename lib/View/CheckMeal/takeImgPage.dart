@@ -98,7 +98,7 @@ class _CameraAppState extends State<TakeImgPage> {
                     minimumSize: const Size(5, 5),
                   ),
                   onPressed: openGallery,
-                  child: const Icon(
+                  child: const FaIcon(
                     Icons.photo,
                     size: 54,
                     color: Colors.black,
