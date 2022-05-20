@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:glucose_predictor/Model/ManualIngInput.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
