@@ -2,17 +2,16 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
+import 'package:glucose_predictor/Controller/firebaseService.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/CheckMeal/apiDataView.dart';
-import 'package:glucose_predictor/service/firebase.service.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 
 class ConfirmScreen extends StatelessWidget {
-  final String path;
+  final String imagePath;
 
-  const ConfirmScreen(this.path, {Key? key}) : super(key: key);
-
+  const ConfirmScreen(this.imagePath, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,67 +34,69 @@ class ConfirmScreen extends StatelessWidget {
       ),
       body: Center(
           child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
-              child: Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height - 225,
-                  child: Image.file(
-                    File(path),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
+          child: Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height - 225,
+              child: Image.file(
+                File(imagePath),
+                fit: BoxFit.cover,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(2.0, 7.0, 3.0, 3.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 12.0),
-                    primary: const Color(0Xff53B2DB),
-                    shape: const StadiumBorder(),
-                  ),
-                  onPressed: () async {
-                    await _saveAsDraft(context);
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    "Save for Later",
-                    style: TextStyle(color: Colors.white, fontSize: 17),
-                  ),
-                ),
-                SizedBox(
-                    width: (MediaQuery.of(context).size.width / 2.6), height: 5),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ApiDataView(path)));
-
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0),
-                    primary: const Color(0Xff53DB61),
-                    shape: const StadiumBorder(),
-                  ),
-                  child: const Text(
-                    "Confirm",
-                    style: TextStyle(color: Colors.white, fontSize: 17),
-                  ),
-                ),
-              ]),
-            )
-          ])),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(2.0, 7.0, 3.0, 3.0),
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0, vertical: 12.0),
+                primary: const Color(0Xff53B2DB),
+                shape: const StadiumBorder(),
+              ),
+              onPressed: () async {
+                await _saveAsDraft(context);
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "Save for Later",
+                style: TextStyle(color: Colors.white, fontSize: 17),
+              ),
+            ),
+            SizedBox(
+                width: (MediaQuery.of(context).size.width / 2.6), height: 5),
+            ElevatedButton(
+              onPressed: () async {
+                await _confirmImg(context);
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 12.0),
+                primary: const Color(0Xff53DB61),
+                shape: const StadiumBorder(),
+              ),
+              child: const Text(
+                "Confirm",
+                style: TextStyle(color: Colors.white, fontSize: 17),
+              ),
+            ),
+          ]),
+        )
+      ])),
     );
   }
 
-  _saveAsDraft(BuildContext context) async {
+  _confirmImg(BuildContext context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ApiDataView(imagePath)));
+  }
 
+  _saveAsDraft(BuildContext context) async {
     String imgName = DateFormat("H:mm, d MMM yyyy").format(DateTime.now());
-    Uint8List fPic = await File(path).readAsBytes();
+    Uint8List fPic = await File(imagePath).readAsBytes();
     final nyFood = DraftImage(imgName, fPic);
     print("FILE NAME: ${nyFood.fileName}");
     final draftBox = Hive.box<DraftImage>("DraftImage");
@@ -105,7 +106,8 @@ class ConfirmScreen extends StatelessWidget {
       context: context,
       builder: (_) => BasicDialogAlert(
         title: const Text("Image Saved 😊"),
-        content: const Text("The image has been saved.\nYou can view it on home screen."),
+        content: const Text(
+            "The image has been saved.\nYou can view it on home screen."),
         actions: <Widget>[
           BasicDialogAction(
             title: const Text("OK"),
@@ -117,5 +119,4 @@ class ConfirmScreen extends StatelessWidget {
       ),
     );
   }
-
 }
