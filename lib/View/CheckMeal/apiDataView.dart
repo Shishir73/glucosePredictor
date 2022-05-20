@@ -14,11 +14,12 @@ class ApiDataView extends StatelessWidget {
     var ingredients = await getDataFromImage(f);
 
     var imgLink = await uploadFireImage(imageFile);
-    await saveToFirebase(ingredients, imgLink);
+    String URL = imgLink;
+
+    await saveToFirebase(ingredients, URL);
 
     return ingredients;
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:glucose_predictor/Model/Ingredient.dart';
-import 'package:glucose_predictor/Controller/firebaseService.dart';
 import 'package:http/http.dart' as http;
 
 var tokenIndex = 0;
@@ -41,7 +40,7 @@ Future<Ingredient> getDataFromImage(Uint8List imageFile) async {
 
   Ingredient ingData = await requestIng(data);
   print("DATA RETURNED - " + ingData.toString());
-  // saveToFirebase(ingData);
+
   return ingData;
 }
 
