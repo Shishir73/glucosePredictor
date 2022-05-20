@@ -23,6 +23,10 @@ class FirebaseService {
   savetofirebase(Ingredient data) async
   {
     //url=" ";
+   // List data1;
+    //if (data.recipe != null) {
+     // data1[] = data.recipe!.map((v) => v.toJson()).toList();
+    //}
     var db = FirebaseFirestore.instance.collection("ApiData");
     Map<String, dynamic> food = {
       "dishid": data.dish_id,
@@ -32,6 +36,7 @@ class FirebaseService {
       "combo": data.is_combo,
       "servingsize": data.serving_size,
       "source": data.source,
+      "recipe":data.recipe.toString()
       //"url": url
     };
     await db.add(food);

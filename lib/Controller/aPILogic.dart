@@ -47,11 +47,18 @@ Future<Ingredient> uploadImage(Uint8List imageFile) async {
 
   Ingredient ingData = await requestIng(data);
   print("DATA RETURNED - " + ingData.toString());
+  //print("DATA RETURNED - ingData.dish_id);
+  print(ingData.dish_id);
+  print(ingData.foodName);
+  print(ingData.hasRecipe);
+  print(ingData.recipe.toString());
+
   FirebaseService().savetofirebase(ingData);
   return ingData;
 
 
 }
+
 
 Future<Ingredient> requestIng(Map imageID) async {
   HttpClient httpClient = HttpClient();
