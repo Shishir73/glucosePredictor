@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/CheckMeal/apiDataView.dart';
-import 'package:glucose_predictor/View/ManualInputPage.dart';
+import 'package:glucose_predictor/View/ManualInputView.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 
