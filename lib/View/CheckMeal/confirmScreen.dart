@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:glucose_predictor/Controller/firebaseService.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/CheckMeal/apiDataView.dart';
@@ -9,9 +10,10 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 
 class ConfirmScreen extends StatelessWidget {
-  final String path;
+  final String imagePath;
 
-  const ConfirmScreen(this.path, {Key? key}) : super(key: key);
+
+  const ConfirmScreen(this.imagePath, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class ConfirmScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 225,
               child: Image.file(
-                File(path),
+                File(imagePath),
                 fit: BoxFit.cover,
               ),
             ),
@@ -76,9 +78,8 @@ class ConfirmScreen extends StatelessWidget {
             SizedBox(
                 width: (MediaQuery.of(context).size.width / 2.6), height: 5),
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ApiDataView(path)));
+              onPressed: () async {
+                await _confirmImg(context);
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
@@ -97,9 +98,14 @@ class ConfirmScreen extends StatelessWidget {
     );
   }
 
+  _confirmImg(BuildContext context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ApiDataView(imagePath)));
+  }
+
   _saveAsDraft(BuildContext context) async {
     String imgName = DateFormat("H:mm, d MMM yyyy").format(DateTime.now());
-    Uint8List fPic = await File(path).readAsBytes();
+    Uint8List fPic = await File(imagePath).readAsBytes();
     final nyFood = DraftImage(imgName, fPic);
     print("FILE NAME: ${nyFood.fileName}");
     final draftBox = Hive.box<DraftImage>("DraftImage");

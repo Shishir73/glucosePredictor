@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
@@ -8,6 +7,7 @@ import 'package:glucose_predictor/View/Home/homePage.dart';
 import 'package:glucose_predictor/View/Settings/SettingsPage.dart';
 import 'package:glucose_predictor/View/CheckMeal/takeImgPage.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 List<CameraDescription> cameras = [];
 
