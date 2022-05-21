@@ -78,7 +78,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
 
   Widget _buildFireView() {
     final Stream<QuerySnapshot> fireData =
-        FirebaseFirestore.instance.collection("candidate").snapshots();
+        FirebaseFirestore.instance.collection("ApiData").snapshots();
 
     return Container(
         height: 200,
@@ -93,7 +93,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                 return const Text("ERROR call for help!!");
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Wait a minute, loading brother.");
+                return const Text("Wait a minute, loading brother...");
               }
               final offData = snapshot.requireData;
               return ListView.builder(
