@@ -66,6 +66,11 @@ class ApiDataView extends StatelessWidget {
           return ListView(
               padding: const EdgeInsets.fromLTRB(60.0, 2.0, 60.0, 45.0),
               children: [
+                SizedBox(
+                  child: Text(
+                    "Dish Name: ${snapshot.data?.foodName}",
+                  ),
+                ),
                 Container(
                   child: Column(
                     children: snapshot.data?.recipe

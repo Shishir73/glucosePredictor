@@ -2,21 +2,23 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:glucose_predictor/Model/Ingredient.dart';
+import 'package:intl/intl.dart';
 
 Future saveToFirebase(Ingredient data, String imgURL) async {
-  var db = FirebaseFirestore.instance.collection("ApiData");
+  var db = FirebaseFirestore.instance.collection("apiIngredients");
+
   Map<String, dynamic> food = {
-    "dishid": data.dish_id,
-    "name": data.foodName,
-    "hasrecipe": data.hasRecipe,
+    "foodName": data.foodName,
+    "dishId": data.dish_id,
+    "hasRecipe": data.hasRecipe,
+    "recipe": data.recipe?.map((v) => v.toJson()).toList(),
     "image": data.imageId,
-    "combo": data.is_combo,
-    "servingsize": data.serving_size,
     "source": data.source,
+    "createdDate": DateFormat("H:mm, d MMM yyyy").format(DateTime.now()),
     "url": imgURL
   };
   await db.add(food);
-  print("success");
+  print("SUCCESS");
 }
 
 Future<String> uploadFireImage(String imagePath) async {

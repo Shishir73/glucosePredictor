@@ -1,13 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/Home/draftPage.dart';
 import 'package:hive_flutter/adapters.dart';
-
-import '../CheckMeal/apiDataView.dart';
-
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -56,11 +51,16 @@ class _HomeTimelineView extends State<HomeTimelineView> {
           elevation: 0,
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.watch_later_outlined,color: Colors.black,),
+              icon: const Icon(
+                Icons.watch_later_outlined,
+                color: Colors.black,
+              ),
               tooltip: 'Quick Saved Meal',
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const DraftPageView()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DraftPageView()));
               },
             ),
           ]),

@@ -12,13 +12,13 @@ class Ingredient {
 
   Ingredient(
       {this.dish_id,
-        this.foodName,
-        this.hasRecipe,
-        this.imageId,
-        this.is_combo,
-        this.recipe,
-        this.serving_size,
-        this.source});
+      this.foodName,
+      this.hasRecipe,
+      this.imageId,
+      this.is_combo,
+      this.recipe,
+      this.serving_size,
+      this.source});
 
   Ingredient.fromJson(Map<String, dynamic> json) {
     dish_id = json['dish_id'];

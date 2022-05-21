@@ -55,12 +55,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final itemList = <CustomNavigationBarItem>[
-      CustomNavigationBarItem(icon: const Icon(CupertinoIcons.home,size: 28)),
+      CustomNavigationBarItem(icon: const Icon(CupertinoIcons.home, size: 28)),
       CustomNavigationBarItem(
           icon: const Icon(CupertinoIcons.add_circled,
               size: 34, semanticLabel: "Check Meal")),
       // Icons.bubble_chart
-      CustomNavigationBarItem(icon: const Icon(CupertinoIcons.gear_alt,size: 28)),
+      CustomNavigationBarItem(
+          icon: const Icon(CupertinoIcons.gear_alt, size: 28)),
     ];
 
     return Container(
