@@ -43,7 +43,6 @@ class GlucoseApp extends StatelessWidget {
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
   int index = 0;
 
@@ -56,13 +55,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final itemList = <CustomNavigationBarItem>[
-      CustomNavigationBarItem( icon: const Icon(CupertinoIcons.home)),
-      CustomNavigationBarItem( icon: const Icon(CupertinoIcons.add_circled)), // Icons.bubble_chart
-      CustomNavigationBarItem( icon: const Icon(CupertinoIcons.gear_alt)),
+      CustomNavigationBarItem(icon: const Icon(CupertinoIcons.home,size: 28)),
+      CustomNavigationBarItem(
+          icon: const Icon(CupertinoIcons.add_circled,
+              size: 34, semanticLabel: "Check Meal")),
+      // Icons.bubble_chart
+      CustomNavigationBarItem(icon: const Icon(CupertinoIcons.gear_alt,size: 28)),
     ];
 
     return Container(
-        child:SafeArea(
+        child: SafeArea(
             top: false,
             child: Scaffold(
               extendBody: true,
@@ -71,21 +73,24 @@ class _MyHomePageState extends State<MyHomePage> {
               bottomNavigationBar: Theme(
                 data: Theme.of(context).copyWith(
                   iconTheme: const IconThemeData(color: Colors.black),
-                ), child: CustomNavigationBar(
-                scaleFactor: 0.1,
-                iconSize: 27.0,
-                elevation: 0,
-                selectedColor: const Color(0xff000000),
-                strokeColor: const Color(0xff000000),
-                unSelectedColor: Colors.grey[400],
-                backgroundColor: const Color(0xffFFFFFF), // E6FFE5
-                currentIndex: index,
-                items: itemList,
-                onTap: (index) => setState(() {
-                  this.index = index;
-                }),
-              ),),)
-        ));
+                ),
+                child: CustomNavigationBar(
+                  scaleFactor: 0.1,
+                  iconSize: 27.0,
+                  elevation: 0,
+                  selectedColor: const Color(0xff000000),
+                  strokeColor: const Color(0xff000000),
+                  unSelectedColor: Colors.grey[400],
+                  backgroundColor: const Color(0xffFFFFFF),
+                  // E6FFE5
+                  currentIndex: index,
+                  items: itemList,
+                  onTap: (index) => setState(() {
+                    this.index = index;
+                  }),
+                ),
+              ),
+            )));
   }
 
   @override
@@ -93,8 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Hive.close();
     super.dispose();
   }
-
 }
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
