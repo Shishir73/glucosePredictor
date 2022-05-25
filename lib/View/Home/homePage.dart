@@ -78,7 +78,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
 
   Widget _buildFireView() {
     final Stream<QuerySnapshot> fireData =
-        FirebaseFirestore.instance.collection("ApiData").snapshots();
+        FirebaseFirestore.instance.collection("apiIngredients").snapshots();
 
     return Container(
         height: 200,

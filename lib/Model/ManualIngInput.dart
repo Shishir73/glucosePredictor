@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 class ManualInput {
   late String foodName;
   late List<Ing> items;
@@ -9,11 +11,12 @@ class ManualInput {
     final Map<String, dynamic> data = <String, dynamic>{};
 
     data['foodName'] = foodName;
-    data['Ingredients'] = items.toString();
+    data['Ingredients'] = items.map((e) => e.toJson()).toList();
 
     return data;
   }
 }
+
 
 class Ing {
   late String ingName;
@@ -21,8 +24,7 @@ class Ing {
 
   Ing(this.ingName, this.quantity);
 
-  @override
-  String toString() {
-    return ("{IngName: "+ ingName + ", Quantity: $quantity}");
+  Map<String, dynamic> toJson(){
+    return {"ing": ingName,"quantity":quantity};
   }
 }

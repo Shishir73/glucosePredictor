@@ -20,11 +20,12 @@ Future<Ingredient> getDataFromImage(Uint8List imageFile) async {
   request.headers['Authorization'] = "Bearer " + token[tokenIndex];
 
   print("THE TOKEN IS ${token[tokenIndex]}");
-  var picture = http.MultipartFile.fromBytes('image', imageFile,
-      filename: 'testImage.jpeg');
+  var picture = http.MultipartFile.fromBytes('image', imageFile, filename: 'testImage.jpeg');
   request.files.add(picture);
   var response = await request.send();
-  print("FIRST RESPONSE FOR UPLOAD IMAGE - ${response.statusCode}");
+  print("*** FIRST RESPONSE STATUS CODE *** ${response.statusCode}");
+  print("*** FIRST RESPONSE *** \n $response ");
+
   if (response.statusCode == 429) {
     tokenIndex++;
     if (tokenIndex >= token.length) {
@@ -52,7 +53,10 @@ Future<Ingredient> requestIng(Map imageID) async {
   request.headers.set('content-type', 'application/json');
   request.add(utf8.encode(json.encode(imageID)));
   HttpClientResponse response = await request.close();
-  print("SECOND RESPONSE FOR REQUESTING - ${response.statusCode}");
+  print(" *** SECOND RESPONSE STATUS CODE ***  ${response.statusCode}");
+
+  print(" *** SECOND RESPONSE *** \n $response ");
+
   var reply = await response.transform(utf8.decoder).join();
   httpClient.close();
   Ingredient ingredients = Ingredient.fromJson(jsonDecode(reply));

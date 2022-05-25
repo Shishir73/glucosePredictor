@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:glucose_predictor/Controller/firebaseService.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
 import 'package:glucose_predictor/View/CheckMeal/apiDataView.dart';

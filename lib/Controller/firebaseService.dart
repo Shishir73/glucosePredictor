@@ -23,7 +23,7 @@ Future saveToFirebase(Ingredient data, String imgURL) async {
 
 Future<String> uploadFireImage(String imagePath) async {
   Reference db1 =
-      FirebaseStorage.instance.ref("testFolder/${getImageName(imagePath)}");
+      FirebaseStorage.instance.ref("apiImages/${getImageName(imagePath)}");
   await db1.putFile(File(imagePath));
   String url = await db1.getDownloadURL();
   print(url);

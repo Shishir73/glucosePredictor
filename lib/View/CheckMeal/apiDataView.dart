@@ -68,7 +68,7 @@ class ApiDataView extends StatelessWidget {
               children: [
                 SizedBox(
                   child: Text(
-                    "Dish Name: ${snapshot.data?.foodName}",
+                    "${snapshot.data?.foodName}",
                   ),
                 ),
                 Container(

@@ -9,12 +9,10 @@ part 'DraftImage.g.dart';
 @HiveType(typeId: 1)
 class DraftImage {
   @HiveField(0)
- String? fileName;
+  String? fileName;
 
   @HiveField(1)
   Uint8List? image;
 
-  DraftImage(this.fileName,this.image);
+  DraftImage(this.fileName, this.image);
 }
-
-
