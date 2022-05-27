@@ -19,7 +19,7 @@ class _ApiDataViewState extends State<ApiDataView> {
 
   _ApiDataViewState(this.imageFile);
 
-  String uniqueKey = UniqueKey().hashCode.toString();
+  String uniqueKey = "imzY"+UniqueKey().hashCode.toString();
 
   Future<Ingredient> getIngredients() async {
     var f = await File(imageFile).readAsBytes();
