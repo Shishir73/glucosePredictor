@@ -11,7 +11,6 @@ import 'package:intl/intl.dart';
 class ConfirmScreen extends StatelessWidget {
   final String imagePath;
 
-
   const ConfirmScreen(this.imagePath, {Key? key}) : super(key: key);
 
   @override
@@ -30,14 +29,20 @@ class ConfirmScreen extends StatelessWidget {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: <Widget>[IconButton(
-          icon: const Icon(Icons.add_moderator_outlined,color: Colors.black,),
-          tooltip: 'Enter Manual Value',
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ManualPageView()));
-          },
-        ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.add_moderator_outlined,
+              color: Colors.black,
+            ),
+            tooltip: 'Enter Manual Value',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ManualPageView()));
+            },
+          ),
         ],
       ),
       body: Center(
@@ -98,8 +103,10 @@ class ConfirmScreen extends StatelessWidget {
   }
 
   _confirmImg(BuildContext context) async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ApiDataView(imagePath)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ApiDataView(imagePath)));
+    // Navigator.push(
+    // context, MaterialPageRoute(builder: (context) => EditScreen("1014530638")));
   }
 
   _saveAsDraft(BuildContext context) async {

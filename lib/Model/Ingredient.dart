@@ -29,7 +29,7 @@ class Ingredient {
     if (json['recipe'] != null) {
       recipe = <Recipe>[];
       json['recipe'].forEach((v) {
-        recipe!.add(new Recipe.fromJson(v));
+        recipe!.add(Recipe.fromJson(v));
       });
     }
     serving_size = json['serving_size'];
@@ -37,17 +37,17 @@ class Ingredient {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['dish_id'] = this.dish_id;
-    data['foodName'] = this.foodName;
-    data['hasRecipe'] = this.hasRecipe;
-    data['imageId'] = this.imageId;
-    data['is_combo'] = this.is_combo;
-    if (this.recipe != null) {
-      data['recipe'] = this.recipe!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['dish_id'] = dish_id;
+    data['foodName'] = foodName;
+    data['hasRecipe'] = hasRecipe;
+    data['imageId'] = imageId;
+    data['is_combo'] = is_combo;
+    if (recipe != null) {
+      data['recipe'] = recipe!.map((v) => v.toJson()).toList();
     }
-    data['serving_size'] = this.serving_size;
-    data['source'] = this.source;
+    data['serving_size'] = serving_size;
+    data['source'] = source;
     return data;
   }
 

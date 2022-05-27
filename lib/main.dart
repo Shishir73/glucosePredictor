@@ -59,7 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
       CustomNavigationBarItem(
           icon: const Icon(CupertinoIcons.add_circled,
               size: 34, semanticLabel: "Check Meal")),
-      // Icons.bubble_chart
       CustomNavigationBarItem(
           icon: const Icon(CupertinoIcons.gear_alt, size: 28)),
     ];

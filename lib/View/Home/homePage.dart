@@ -99,7 +99,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
               return ListView.builder(
                 itemCount: offData.size,
                 itemBuilder: (context, index) {
-                  return Text("${offData.docs[index]["name"]}");
+                  return Text("${offData.docs[index]["foodName"]}");
                 },
               );
             }));

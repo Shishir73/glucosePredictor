@@ -12,9 +12,12 @@ class ManualPageView extends StatefulWidget {
 
 class _ManualPageView extends State<ManualPageView> {
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  final ManualInput manualInput = ManualInput("", List<Ing>.empty(growable: true),);
-  CollectionReference addInputData = FirebaseFirestore.instance.collection('manualInput');
-
+  final ManualInput manualInput = ManualInput(
+    "",
+    List<Ing>.empty(growable: true),
+  );
+  CollectionReference addInputData =
+      FirebaseFirestore.instance.collection('manualInput');
 
   @override
   void initState() {
@@ -60,14 +63,14 @@ class _ManualPageView extends State<ManualPageView> {
                   "${const Icon(Icons.web)}",
                   "name",
                   "Food Name",
-                      (onValidateVal) {
+                  (onValidateVal) {
                     if (onValidateVal.isEmpty) {
                       return 'User Name can\'t be empty.';
                     }
 
                     return null;
                   },
-                      (onSavedVal) => {
+                  (onSavedVal) => {
                     manualInput.foodName = onSavedVal,
                   },
                   initialValue: manualInput.foodName,
@@ -94,14 +97,14 @@ class _ManualPageView extends State<ManualPageView> {
                       "Ingredient(s)",
                       textAlign: TextAlign.left,
                       style:
-                      TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ),
                   emailsContainerUI(),
                   Center(
                     child: FormHelper.submitButton(
                       "Save",
-                          () async {
+                      () async {
                         if (validateAndSave()) {
                           addInputData.add(manualInput.toJson());
                           print(manualInput.toJson());
@@ -150,14 +153,14 @@ class _ManualPageView extends State<ManualPageView> {
               context,
               "${const Icon(Icons.web)}",
               "ing_$index",
-                  (onValidateVal) {
+              (onValidateVal) {
                 if (onValidateVal.isEmpty) {
                   return 'Ingredient ${index + 1} can\'t be empty.';
                 }
 
                 return null;
               },
-                  (onSavedVal) => {
+              (onSavedVal) => {
                 manualInput.items[index].ingName = onSavedVal,
               },
               initialValue: manualInput.items[index].ingName,
@@ -180,13 +183,13 @@ class _ManualPageView extends State<ManualPageView> {
               context,
               "${const Icon(Icons.web)}",
               "quantity_$index",
-                  (onValidateVal) {
+              (onValidateVal) {
                 if (onValidateVal.isEmpty) {
                   return 'Quantity ${index + 1} can\'t be empty.';
                 }
                 return null;
               },
-                  (onSavedVal) => {
+              (onSavedVal) => {
                 manualInput.items[index].quantity = int.parse(onSavedVal),
               },
               initialValue: "${manualInput.items[index].quantity}",
@@ -264,46 +267,46 @@ class _ManualPageView extends State<ManualPageView> {
 Widget addIngField() {
   return Scaffold(
       body: SizedBox(
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              flex: 3,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7.0),
-                child: TextField(
-                    style: const TextStyle(
-                      fontSize: 14,
+    child: Row(
+      children: <Widget>[
+        Flexible(
+          flex: 3,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 7.0),
+            child: TextField(
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.lightGreen,
                     ),
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.lightGreen,
-                        ),
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      labelText: "Enter Ingredient",
-                    )),
-              ),
-            ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7.0),
-                child: TextField(
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        labelText: "Quantity")),
-              ),
-            ),
-          ],
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  labelText: "Enter Ingredient",
+                )),
+          ),
         ),
-      ));
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 7.0),
+            child: TextField(
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    labelText: "Quantity")),
+          ),
+        ),
+      ],
+    ),
+  ));
 }

@@ -129,8 +129,7 @@ class _SettingsView extends State<SettingsPage> {
     );
   }
 
-  _getInfo(){
-
+  _getInfo() {
     List<String> list = [
       "Glucose Predictor is designed for people with diabetes who need to mainitain their blood glucose level.",
       "There are two types of units to measure blood glucose level depending on the device used like mg/dl and nmol/L.",
@@ -141,33 +140,28 @@ class _SettingsView extends State<SettingsPage> {
 
     return CarouselSlider(
       options: CarouselOptions(
-        // disableCenter: true,
         aspectRatio: 1.6,
         enlargeCenterPage: true,
       ),
       items: list
           .map((item) => Container(
-        child: Center(
-            child: Center(
-                child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                    child: Text(item,
-                    style: const TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.black,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 7,
-                    textAlign: TextAlign.center)))),
-        color: const Color(0XffFFF9C2),
-      ))
+                child: Center(
+                    child: Center(
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                            child: Text(item,
+                                style: const TextStyle(
+                                  fontSize: 25.0,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 7,
+                                textAlign: TextAlign.center)))),
+                color: const Color(0XffFFF9C2),
+              ))
           .toList(),
     );
   }
 }
-
-// Image.network('https://images.unsplash.com/photo-1645998976611-2c1985ca1a63?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-//   height: double.infinity,
-//   width: double.infinity,
-//   fit: BoxFit.cover,)
