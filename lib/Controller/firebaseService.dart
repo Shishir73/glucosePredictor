@@ -14,12 +14,14 @@ Future saveToFirebase(Ingredient data, String imgURL) async {
     "recipe": data.recipe?.map((v) => v.toJson()).toList(),
     "image": data.imageId,
     "source": data.source,
-    "createdDate": DateFormat("H:mm, d MMM yyyy").format(DateTime.now()),
-    "url": imgURL
+    "createdDatetime": DateFormat("H:mm, d MMM yyyy").format(DateTime.now()),
+    "createdTime": DateFormat("d/M/yyyy").format(DateTime.now()),
+     "url": imgURL
   };
   await db.add(food);
   print("SUCCESS");
 }
+
 
 Future<String> uploadFireImage(String imagePath) async {
   Reference db1 =
