@@ -35,3 +35,4 @@ Future<String> uploadFireImage(String imagePath) async {
 String getImageName(String image) {
   return image.split("/").last;
 }
+
