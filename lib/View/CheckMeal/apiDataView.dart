@@ -3,22 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:glucose_predictor/Controller/aPILogic.dart';
 import 'package:glucose_predictor/Controller/firebaseService.dart';
 import 'package:glucose_predictor/Model/Ingredient.dart';
+import 'package:glucose_predictor/View/CheckMeal/editIngScreen.dart';
 
-class ApiDataView extends StatelessWidget {
+class ApiDataView extends StatefulWidget {
   final String imageFile;
 
   const ApiDataView(this.imageFile, {Key? key}) : super(key: key);
 
+  @override
+  _ApiDataViewState createState() => _ApiDataViewState(imageFile);
+}
+
+class _ApiDataViewState extends State<ApiDataView> {
+  String imageFile;
+
+  _ApiDataViewState(this.imageFile);
+
+  String uniqueKey = "imzY"+UniqueKey().hashCode.toString();
+
   Future<Ingredient> getIngredients() async {
     var f = await File(imageFile).readAsBytes();
-    var ingredients = await getDataFromImage(f);
+    var ing = await getDataFromImage(f);
 
+    return ing;
+  }
+
+  saveToFire() async {
+    Ingredient _ingredient = await getIngredients();
     var imgLink = await uploadFireImage(imageFile);
     String URL = imgLink;
-
-    await saveToFirebase(ingredients, URL);
-
-    return ingredients;
+    await saveToFirebase(_ingredient, URL, uniqueKey);
   }
 
   @override
@@ -67,16 +81,17 @@ class ApiDataView extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(60.0, 2.0, 60.0, 45.0),
               children: [
                 SizedBox(
-                  child: Text(
+                  child: Center(
+                      child: Text(
                     "${snapshot.data?.foodName}",
-                  ),
+                  )),
                 ),
                 Container(
                   child: Column(
                     children: snapshot.data?.recipe
                             ?.map((e) => ListTile(
                                   title: Text("${e.name}"),
-                                  trailing: Text(" ~${e.weight}gram"),
+                                  trailing: Text("~${e.weight} gram"),
                                 ))
                             .toList() ??
                         [],
@@ -85,7 +100,9 @@ class ApiDataView extends StatelessWidget {
                 const SizedBox(height: 30.0, width: 10.0),
                 SizedBox(
                     child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await _editScreen(context);
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 22.0, vertical: 10.0),
@@ -104,5 +121,15 @@ class ApiDataView extends StatelessWidget {
         return const CircularProgressIndicator();
       },
     );
+  }
+
+  _editScreen(BuildContext context) async {
+    await saveToFire();
+    print("*****.SAVED TO 🔥 DATABASE 👏.*****");
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EditScreen(uniqueKey, imageFile)));
   }
 }
