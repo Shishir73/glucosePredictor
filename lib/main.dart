@@ -3,11 +3,13 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
+//import 'package:glucose_predictor/Model/food_notifier.dart';
 import 'package:glucose_predictor/View/Home/homePage.dart';
 import 'package:glucose_predictor/View/Settings/SettingsPage.dart';
 import 'package:glucose_predictor/View/CheckMeal/takeImgPage.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -22,11 +24,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+
   runApp(const GlucoseApp());
 }
 
 class GlucoseApp extends StatelessWidget {
   const GlucoseApp({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +49,7 @@ class GlucoseApp extends StatelessWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int index = 0;
+
 
   final screens = [
     const HomePage(),

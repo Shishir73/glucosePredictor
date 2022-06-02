@@ -1,8 +1,14 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:glucose_predictor/Model/Food.dart';
 import 'package:glucose_predictor/Model/Ingredient.dart';
+//import 'package:glucose_predictor/Model/food_notifier.dart';
+
 import 'package:intl/intl.dart';
+
+
+
 
 Future saveToFirebase(Ingredient data, String imgURL) async {
   var db = FirebaseFirestore.instance.collection("apiIngredients");
@@ -35,4 +41,15 @@ Future<String> uploadFireImage(String imagePath) async {
 String getImageName(String image) {
   return image.split("/").last;
 }
+/*getFoods(FoodNotifier foodNotifier)async{
+  QuerySnapshot result = await FirebaseFirestore.instance.collection('apiIngredients').get();
+  List<DocumentSnapshot> documents=result.docs;
+
+  List<Food> _foodList=[];
+  documents.forEach((snapshot){
+   Food food=Food.fromMap(data) ;
+   _foodList.add(food);
+  });
+  foodNotifier.foodList=_foodList;
+}*/
 
