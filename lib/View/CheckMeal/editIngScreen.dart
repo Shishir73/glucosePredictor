@@ -8,7 +8,8 @@ class EditScreen extends StatefulWidget {
   final String uniqueKey;
   final String imageFile;
 
-  EditScreen(this.uniqueKey, this.imageFile, {Key? key}) : super(key: key);
+  const EditScreen(this.uniqueKey, this.imageFile, {Key? key})
+      : super(key: key);
 
   @override
   _EditPageState createState() => _EditPageState(uniqueKey, imageFile);
@@ -20,12 +21,17 @@ class _EditPageState extends State<EditScreen> {
 
   _EditPageState(this.uniqueKey, this.imageFile);
 
+  // INSTANCE TO GET FIREBASE DATA
   late Future<List<dynamic>?> _futureRecipe;
+
+  Future<List?> getRecipeData(String val) async {
+    return await getRecipeById(val);
+  }
 
   @override
   void initState() {
     super.initState();
-    _futureRecipe = fireRecipeData(uniqueKey);
+    _futureRecipe = getRecipeData(uniqueKey);
   }
 
   @override
@@ -66,9 +72,13 @@ class _EditPageState extends State<EditScreen> {
               child: FormHelper.submitButton(
                 "Save",
                 () async {
-                  var fireData = await getRecipeById("sOwayJKgcXpGsTMH13Fh");
-                  print(fireData![0]["name"]);
-                  print(fireData);
+                  print(_futureRecipe.toString());
+                  _futureRecipe.then((p){
+                    print(p);
+                  });
+                  print(uniqueKey);
+
+                  print("DOG 🐶 DONE");
                 },
               ),
             )),
@@ -122,7 +132,7 @@ class _EditPageState extends State<EditScreen> {
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
                 double _weight = snapshot.data![index]["weight"];
-                // double _carbs = _newList[index].carbs;
+                double _carbs = snapshot.data![index]["carbs"] ?? 1;
                 return Column(
                   children: [
                     Row(
@@ -136,12 +146,13 @@ class _EditPageState extends State<EditScreen> {
                             child: FormHelper.inputFieldWidget(
                           context,
                           "",
-                          "1", // _carbs.round().toString(),
+                          _carbs.round().toString(),
                           () {},
                           (onValueSave) => {
-                            // _newList[index].carbs = int.parse(onValueSave),
+                            snapshot.data![index]["carbs"] =
+                                int.parse(onValueSave),
                           },
-                          initialValue: "1",
+                          initialValue: "${snapshot.data![index]["carbs"]}",
                           borderFocusColor: Colors.transparent,
                           borderColor: Colors.transparent,
                           isNumeric: true,
@@ -175,10 +186,7 @@ class _EditPageState extends State<EditScreen> {
                           setState(() {
                             _weight = value;
                             snapshot.data![index]["weight"] = value;
-
-                            // _newList[index].carbs =
-                            //     (getCarbohydrates()[_newList[index].name] ?? 0) *
-                            //         _quantity;
+                            snapshot.data![index]["carbs"] = (getCarbs()[snapshot.data![index]["name"]] ?? 1) * _weight;
                           });
                         }),
                   ],
@@ -190,8 +198,4 @@ class _EditPageState extends State<EditScreen> {
       },
     );
   }
-}
-
-Future<List?> fireRecipeData(String val) async {
-  return await getRecipeById(val);
 }

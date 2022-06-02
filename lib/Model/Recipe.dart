@@ -2,7 +2,7 @@ class Recipe {
   int? id;
   String? name;
   double? weight;
-  double? carbs = 1;
+  double? carbs;
 
   Recipe({this.id, this.name, this.weight, this.carbs});
 

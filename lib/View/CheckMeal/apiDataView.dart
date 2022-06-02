@@ -19,20 +19,27 @@ class _ApiDataViewState extends State<ApiDataView> {
 
   _ApiDataViewState(this.imageFile);
 
-  String uniqueKey = "imzY"+UniqueKey().hashCode.toString();
+  // INSTANCE TO GET INGREDIENT DATA
+  late Future<Ingredient> _apiIngData;
+  bool isLoading = false;
+  String uniqueKey = "imzY" + UniqueKey().hashCode.toString();
 
   Future<Ingredient> getIngredients() async {
     var f = await File(imageFile).readAsBytes();
-    var ing = await getDataFromImage(f);
-
-    return ing;
+    return await getDataFromImage(f);
   }
 
   saveToFire() async {
-    Ingredient _ingredient = await getIngredients();
+    Ingredient _ingredient = await _apiIngData;
     var imgLink = await uploadFireImage(imageFile);
     String URL = imgLink;
     await saveToFirebase(_ingredient, URL, uniqueKey);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _apiIngData = getIngredients();
   }
 
   @override
@@ -67,6 +74,12 @@ class _ApiDataViewState extends State<ApiDataView> {
             ),
           ),
         ),
+        Visibility(
+            visible: isLoading,
+            child: const LinearProgressIndicator(
+              backgroundColor: Colors.greenAccent,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+            )),
         Flexible(child: _buildListView()),
       ])),
     );
@@ -74,7 +87,7 @@ class _ApiDataViewState extends State<ApiDataView> {
 
   Widget _buildListView() {
     return FutureBuilder<Ingredient>(
-      future: getIngredients(),
+      future: _apiIngData,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView(
@@ -101,7 +114,7 @@ class _ApiDataViewState extends State<ApiDataView> {
                 SizedBox(
                     child: ElevatedButton(
                   onPressed: () async {
-                    await _editScreen(context);
+                    await _gotoEditScreen(context);
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -123,9 +136,15 @@ class _ApiDataViewState extends State<ApiDataView> {
     );
   }
 
-  _editScreen(BuildContext context) async {
+  _gotoEditScreen(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
     await saveToFire();
     print("*****.SAVED TO 🔥 DATABASE 👏.*****");
+    setState(() {
+      isLoading = false;
+    });
 
     Navigator.push(
         context,

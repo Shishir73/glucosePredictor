@@ -90,10 +90,10 @@ class _HomeTimelineView extends State<HomeTimelineView> {
               AsyncSnapshot<QuerySnapshot> snapshot,
             ) {
               if (snapshot.hasError) {
-                return const Text("ERROR call for help!!");
+                return const Text("ERROR 💀 \n CALL FOR HELP 🥹");
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Wait a minute, loading brother...");
+                return const Text("✨ LOADING..🔥 💚");
               }
               final offData = snapshot.requireData;
               return ListView.builder(

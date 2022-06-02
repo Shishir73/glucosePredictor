@@ -20,7 +20,7 @@ Future saveToFirebase(Ingredient data, String imgURL, String uniqueKey) async {
     "url": imgURL
   };
   await collectionRef.doc("$uniqueKey").set(food);
-  print("FOOD ADDED!");
+  print("FOOD 🔥 SAVED!");
 }
 
 Future<String> uploadFireImage(String imagePath) async {
@@ -45,6 +45,3 @@ Future<List<dynamic>?> getRecipeById(String uniqueKey) async {
   final docSnap = await ref.get();
   return docSnap.data()?.recipe;
 }
-
-
-
