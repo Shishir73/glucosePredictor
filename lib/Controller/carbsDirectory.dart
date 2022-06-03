@@ -24,6 +24,7 @@ getCarbs() {
     "spinach": 0.032,
     "strawberry": 0.083,
     "salt": 0,
+    "sugar": 0.999,
     "waffle": 0.1905,
     "water": 0,
   };

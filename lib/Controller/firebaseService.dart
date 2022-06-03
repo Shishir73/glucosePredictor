@@ -45,3 +45,11 @@ Future<List<dynamic>?> getRecipeById(String uniqueKey) async {
   final docSnap = await ref.get();
   return docSnap.data()?.recipe;
 }
+
+updateRecipe(String uniqueKey, List? value) async {
+  return await collectionRef
+      .doc(uniqueKey)
+      .update({'recipe': value})
+      .then((_) => print('Updated'))
+      .catchError((error) => print('Update failed: $error'));
+}

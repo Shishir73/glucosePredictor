@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:glucose_predictor/Controller/carbsDirectory.dart';
 import 'package:glucose_predictor/Controller/firebaseService.dart';
+import 'package:glucose_predictor/main.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 class EditScreen extends StatefulWidget {
@@ -23,6 +25,7 @@ class _EditPageState extends State<EditScreen> {
 
   // INSTANCE TO GET FIREBASE DATA
   late Future<List<dynamic>?> _futureRecipe;
+  late List? _recipesValue;
 
   Future<List?> getRecipeData(String val) async {
     return await getRecipeById(val);
@@ -73,12 +76,9 @@ class _EditPageState extends State<EditScreen> {
                 "Save",
                 () async {
                   print(_futureRecipe.toString());
-                  _futureRecipe.then((p){
-                    print(p);
-                  });
-                  print(uniqueKey);
-
-                  print("DOG 🐶 DONE");
+                  _recipesValue = await _futureRecipe;
+                  _updateFireData(context, uniqueKey, _recipesValue);
+                  print("DOG. 🐶 DONE!");
                 },
               ),
             )),
@@ -100,7 +100,7 @@ class _EditPageState extends State<EditScreen> {
             Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
-                  "Carbs",
+                  "Carbs(g)",
                   style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.black,
@@ -110,7 +110,7 @@ class _EditPageState extends State<EditScreen> {
             Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                 child: Text(
-                  "Quantity",
+                  "Quantity(g)",
                   style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.black,
@@ -186,7 +186,10 @@ class _EditPageState extends State<EditScreen> {
                           setState(() {
                             _weight = value;
                             snapshot.data![index]["weight"] = value;
-                            snapshot.data![index]["carbs"] = (getCarbs()[snapshot.data![index]["name"]] ?? 1) * _weight;
+                            snapshot.data![index]["carbs"] =
+                                (getCarbs()[snapshot.data![index]["name"]] ??
+                                        1) *
+                                    _weight;
                           });
                         }),
                   ],
@@ -196,6 +199,32 @@ class _EditPageState extends State<EditScreen> {
           return const CircularProgressIndicator(color: Colors.orange);
         }
       },
+    );
+  }
+
+  _updateFireData(BuildContext context, String key, List? rVal) async {
+    await updateRecipe(key, rVal);
+
+    return showPlatformDialog(
+      context: context,
+      builder: (_) => BasicDialogAlert(
+        title: const Text("Ingredients Saved 👏"),
+        content: const Text(
+            "The ingredients has been saved.\nYou can view it on home screen."),
+        actions: <Widget>[
+          BasicDialogAction(
+            title: const Text("OK"),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const MyHomePage(title: 'Predict Glucose')),
+                  (route) => false);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

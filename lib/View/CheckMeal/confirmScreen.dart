@@ -105,8 +105,6 @@ class ConfirmScreen extends StatelessWidget {
   _confirmImg(BuildContext context) async {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => ApiDataView(imagePath)));
-    // Navigator.push(
-    // context, MaterialPageRoute(builder: (context) => EditScreen("1014530638")));
   }
 
   _saveAsDraft(BuildContext context) async {
