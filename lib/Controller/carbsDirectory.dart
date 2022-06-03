@@ -19,12 +19,27 @@ getCarbs() {
     "cauliflower": 0.047,
     "chocolate": 0.581,
     "cream": 0.02,
+
+    // E
     "egg": 0.015,
+
+    // F
     "flour": 0.738,
+
+    // L
     "lettuce": 0.035,
+
+    // M
     "milk": 0.046,
+
+    // O
     "orange": 0.122,
+
+    // P
     "potato": 0.173,
+    "pepper": 0.725,
+
+    // R
     "raspberry": 0.106,
 
     // S
