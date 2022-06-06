@@ -2,65 +2,73 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/View/Home/homePage.dart';
 import 'package:glucose_predictor/Model/FireBaseIngredients.dart';
-class DetailPage extends StatelessWidget{
+class DetailPage extends StatelessWidget {
   var index1;
+
   DetailPage(this.index1);
+
+  //final List? list1=convert(index1["recipe"]);
+
+  // String get recipe => null;
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-        title:Text(index1["foodName"]),
-      ),
-      body: Center(
-        child:Container(
-          width:200,
-          height:double.infinity,
-          child:Column(
-            children:<Widget>[
-              Image.network(index1["url"]),
-            SizedBox(height:32,width:200
-            ),
-              Text(index1["foodName"],
-              style:TextStyle(fontSize:30,
-              ),
-              ),
-               //Text(index1["recipe"].tiList()),
-               /* GridView.count(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  crossAxisCount: 3,
-                    crossAxisSpacing:4,
-                  mainAxisSpacing:4,
-                  children: index1["recipe"].map((v) => v.toJson()).toList(),
-             )*/
-            ],
-          )
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text(index1["foodName"],
+            style: TextStyle(color: Color(0xff909090))),
+        centerTitle: true,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
+
+      body: SizedBox(
+        child: Column(children: [
+        Padding(
+        padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
+        child: SizedBox(
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height - 500,
+          child: Image.network(
+            index1["url"],
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+          Flexible(
+            child: ListView.builder(
+            shrinkWrap:true,
+    itemCount: index1["recipe"].length,
+    scrollDirection: Axis.vertical,
+    itemBuilder:(BuildContext context, int index) {
+      return ListTile(
+        title: Text(
+          index1["recipe"][index].toString(),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+      );
+    }
+            ),
+    ),
+      ],
+    ),
+    ),
     );
   }
 }
-/*class FoodDetail extends StatefulWidget {
-   final DocumentSnapshot post;
-  FoodDetail({required this.post});
-  @override
-    _FoodDetailState createState() => _FoodDetailState();
-  
-  }
 
-class _FoodDetailState extends State<FoodDetail>{
-  @override
-  Widget build(BuildContext context){
-    var post;
-    return Container(
-     child: Card(
-       child: ListTile(
-         title:Text(Widget.post.offData["foodName"]),
-
-       )
-     )
-    );
-
-  }
-
-}*/
