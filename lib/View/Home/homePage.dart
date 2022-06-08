@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:glucose_predictor/Controller/firebaseService.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
-import 'package:glucose_predictor/View/Home/calender.dart';
+//import 'package:glucose_predictor/View/Home/calender.dart';
 //import 'package:glucose_predictor/Model/food_notifier.dart';
 import 'package:glucose_predictor/View/Home/draftPage.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -139,9 +139,8 @@ class _HomeTimelineView extends State<HomeTimelineView> {
   }
 
   Widget _buildFireView() {
-    print(pickeddate.toString());
     final Stream<QuerySnapshot> fireData =
-    collectionRef.snapshots();
+    FirebaseFirestore.instance.collection("apiIngredients").snapshots();
     return Align(
         alignment:Alignment.topLeft,
         child:Container(
@@ -182,11 +181,11 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                 })));
   }
   Widget _buildFireView1() {
-    print(pickeddate.toString());
     final Stream<QuerySnapshot> fireData =
-    collectionRef.where(
+    FirebaseFirestore.instance.collection("apiIngredients").where(
         'createdTime', isEqualTo:
     pickeddate.toString()).snapshots();
+    print(fireData);
     return Align(
         alignment:Alignment.topLeft,
         child:Container(
@@ -221,6 +220,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                             }
                         );
                       },
+
                   );
                 })));
   }
