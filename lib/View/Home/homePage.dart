@@ -123,8 +123,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
          ]),
       body: Center(
         child: Column(
-
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               if (pickeddate!=null)
                 Expanded(child: _buildFireView1()),
@@ -156,24 +155,39 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text("Wait a minute, loading brother...");
+                    /*return ListView.builder(
+                  shrinkWrap: true,
+                  children:
+                  snapshot.data!.docs.map((DocumentSnapshot document) {
+                  Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+                  return ListTile(
+                      //leading:Image.network(data['url'],
+                        //width:120,
+                      //),
+                  title: Text(data['foodName']),
+                    //subtitle: Text(data['createdDatetime'])
+                  );
+                  }).toList(),*/
                   }
+
                   final offData = snapshot.requireData;
                   return ListView.builder(
                       itemCount: offData.size,
-                      //reverse:true,
+                      reverse:true,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
                             leading:Image.network("${offData.docs[index]["url"]}",
                               width:120,
                             ),
                             title: Text("${offData.docs[index]["foodName"]}"),
-                            subtitle: Text("${offData.docs[index]["createdDatetime"]}"),
+                            subtitle: Text("${offData.docs[index]["createdDate"]}"),
                             onTap:(){
                               var index1=offData.docs[index];
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context)=>DetailPage(index1)));
-                            }
+                            },
                         );
                       },
 
@@ -181,6 +195,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                 })));
   }
   Widget _buildFireView1() {
+    //var newMap = groupBy(data, (Map obj) => obj['release_date']);
     final Stream<QuerySnapshot> fireData =
     FirebaseFirestore.instance.collection("apiIngredients").where(
         'createdTime', isEqualTo:
@@ -203,6 +218,19 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                     return const Text("Wait a minute, loading brother...");
                   }
                   final offData = snapshot.requireData;
+                  /*return ListView(
+                    shrinkWrap: true,
+                    children:
+                    snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+                      return ListTile(
+                        title: Text(data['foodName']),
+                      );
+                    }).toList(),
+                  );*/
+
+
                   return ListView.builder(
                      itemCount: offData.size,
                       itemBuilder: (BuildContext context, int index) {
@@ -211,7 +239,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                               width:120,
                             ),
                             title: Text("${offData.docs[index]["foodName"]}"),
-                            subtitle: Text("${offData.docs[index]["createdDatetime"]}"),
+                            subtitle: Text("${offData.docs[index]["createdDate"]}"),
                             onTap:(){
                               var index1=offData.docs[index];
                               Navigator.push(

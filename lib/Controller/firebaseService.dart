@@ -21,6 +21,7 @@ Future saveToFirebase(Ingredient data, String imgURL, String uniqueKey) async {
     "createdTime": DateFormat("d/M/yyyy").format(DateTime.now()),
      "url": imgURL
   };
+  //collectionRef.add(food);
   await collectionRef.doc("$uniqueKey").set(food);
   print("FOOD ADDED!");
 }

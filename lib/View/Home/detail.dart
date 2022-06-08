@@ -55,7 +55,7 @@ class DetailPage extends StatelessWidget {
     itemBuilder:(BuildContext context, int index) {
       return ListTile(
         title: Text(
-          index1["recipe"][index].toString(),
+          index1["recipe"][index]["foodName"],
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
