@@ -1,14 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:glucose_predictor/Controller/firebaseService.dart';
 import 'package:glucose_predictor/Model/DraftImage.dart';
-//import 'package:glucose_predictor/View/Home/calender.dart';
-//import 'package:glucose_predictor/Model/food_notifier.dart';
 import 'package:glucose_predictor/View/Home/draftPage.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:glucose_predictor/main.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:glucose_predictor/View/Home/detail.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,7 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,7 +47,6 @@ class _HomeTimelineView extends State<HomeTimelineView> {
 
   @override
   Widget build(BuildContext context) {
-    var foodNotifier;
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -61,18 +54,6 @@ class _HomeTimelineView extends State<HomeTimelineView> {
               style: TextStyle(color: Color(0xff909090))),
           centerTitle: true,
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const HomePage()));
-            }
-          ),
           actions: <Widget>[
             IconButton(
               icon: const Icon(
@@ -87,130 +68,111 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                         builder: (context) => const DraftPageView()));
               },
             ),
-
             Align(
               alignment: Alignment.centerLeft,
-            child:IconButton(
+              child: IconButton(
                 icon: const Icon(
                   Icons.calendar_today,
-                  color:Colors.black,
+                  color: Colors.black,
                 ),
-              tooltip: 'pick date',
-              onPressed: () {
-    DatePicker.showDatePicker(context,
-    showTitleActions: true,
-    minTime: DateTime(2018, 03, 5),
-    maxTime: DateTime(2026, 06, 7),
-    onChanged: (date) {
-    print('change $date');
-    setState(() {
-    pickeddate = "${date.day}";
-    });
-    },
-    onConfirm: (date) {
-    print('confirm $date');
-    setState(() {
-    pickeddate =
-    "${date.day}/${date.month}/${date.year}";
-    _buildFireView1();
-    });
-    },
-    currentTime: DateTime.now(),
-    locale: LocaleType.en);
-    },
+                tooltip: 'pick date',
+                onPressed: () {
+                  DatePicker.showDatePicker(context,
+                      showTitleActions: true,
+                      minTime: DateTime(2018, 03, 5),
+                      maxTime: DateTime(2026, 06, 7), onChanged: (date) {
+                    print('change $date');
+                    setState(() {
+                      pickeddate = "${date.day}";
+                    });
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                    setState(() {
+                      pickeddate = "${date.day}/${date.month}/${date.year}";
+                      _buildFireView1();
+                    });
+                  }, currentTime: DateTime.now(), locale: LocaleType.en);
+                },
+              ),
             ),
-            ),
-         ]),
+          ]),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              if (pickeddate!=null)
-                Expanded(child: _buildFireView1()),
-                const SizedBox(width: 20, height: 45),
-              if(pickeddate==null)
-                  Expanded(child: _buildFireView()),
-                  const SizedBox(width: 20, height: 45),
-            ]
-        ),
+              if (pickeddate != null) Expanded(child: _buildFireView1()),
+              const SizedBox(width: 20, height: 45),
+              if (pickeddate == null) Expanded(child: _buildFireView()),
+              const SizedBox(width: 20, height: 45),
+            ]),
       ),
     );
   }
 
   Widget _buildFireView() {
     final Stream<QuerySnapshot> fireData =
-    FirebaseFirestore.instance.collection("apiIngredients").snapshots();
+        FirebaseFirestore.instance.collection("apiIngredients").snapshots();
     return Align(
-        alignment:Alignment.topLeft,
-        child:Container(
+        alignment: Alignment.topLeft,
+        child: Container(
             width: 300,
             height: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: StreamBuilder<QuerySnapshot>(
                 stream: fireData,
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot,) {
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot,
+                ) {
                   if (snapshot.hasError) {
                     return const Text("ERROR call for help!!");
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text("Wait a minute, loading brother...");
-                    /*return ListView.builder(
-                  shrinkWrap: true,
-                  children:
-                  snapshot.data!.docs.map((DocumentSnapshot document) {
-                  Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-                  return ListTile(
-                      //leading:Image.network(data['url'],
-                        //width:120,
-                      //),
-                  title: Text(data['foodName']),
-                    //subtitle: Text(data['createdDatetime'])
-                  );
-                  }).toList(),*/
                   }
-
                   final offData = snapshot.requireData;
                   return ListView.builder(
-                      itemCount: offData.size,
-                      reverse:true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                            leading:Image.network("${offData.docs[index]["url"]}",
-                              width:120,
-                            ),
-                            title: Text("${offData.docs[index]["foodName"]}"),
-                            subtitle: Text("${offData.docs[index]["createdDate"]}"),
-                            onTap:(){
-                              var index1=offData.docs[index];
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context)=>DetailPage(index1)));
-                            },
-                        );
-                      },
-
+                    itemCount: offData.size,
+                    reverse: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        leading: Image.network(
+                          "${offData.docs[index]["url"]}",
+                          width: 120,
+                        ),
+                        title: Text("${offData.docs[index]["foodName"]}"),
+                        subtitle: Text("${offData.docs[index]["createdDate"]}"),
+                        onTap: () {
+                          var index1 = offData.docs[index];
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailPage(index1)));
+                        },
+                      );
+                    },
                   );
                 })));
   }
+
   Widget _buildFireView1() {
-    //var newMap = groupBy(data, (Map obj) => obj['release_date']);
-    final Stream<QuerySnapshot> fireData =
-    FirebaseFirestore.instance.collection("apiIngredients").where(
-        'createdTime', isEqualTo:
-    pickeddate.toString()).snapshots();
+    final Stream<QuerySnapshot> fireData = FirebaseFirestore.instance
+        .collection("apiIngredients")
+        .where('createdDate', isEqualTo: pickeddate.toString())
+        .snapshots();
     print(fireData);
     return Align(
-        alignment:Alignment.topLeft,
-        child:Container(
+        alignment: Alignment.topLeft,
+        child: Container(
             width: 300,
             height: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: StreamBuilder<QuerySnapshot>(
                 stream: fireData,
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot,) {
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot,
+                ) {
                   if (snapshot.hasError) {
                     return const Text("ERROR call for help!!");
                   }
@@ -218,37 +180,25 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                     return const Text("Wait a minute, loading brother...");
                   }
                   final offData = snapshot.requireData;
-                  /*return ListView(
-                    shrinkWrap: true,
-                    children:
-                    snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
-                      return ListTile(
-                        title: Text(data['foodName']),
-                      );
-                    }).toList(),
-                  );*/
-
-
                   return ListView.builder(
-                     itemCount: offData.size,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                            leading:Image.network("${offData.docs[index]["url"]}",
-                              width:120,
-                            ),
-                            title: Text("${offData.docs[index]["foodName"]}"),
-                            subtitle: Text("${offData.docs[index]["createdDate"]}"),
-                            onTap:(){
-                              var index1=offData.docs[index];
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context)=>DetailPage(index1)));
-                            }
-                        );
-                      },
-
+                    itemCount: offData.size,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                          leading: Image.network(
+                            "${offData.docs[index]["url"]}",
+                            width: 120,
+                          ),
+                          title: Text("${offData.docs[index]["foodName"]}"),
+                          subtitle:
+                              Text("${offData.docs[index]["createdDate"]}"),
+                          onTap: () {
+                            var index1 = offData.docs[index];
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailPage(index1)));
+                          });
+                    },
                   );
                 })));
   }

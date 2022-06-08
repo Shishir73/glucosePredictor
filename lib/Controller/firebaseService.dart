@@ -10,7 +10,7 @@ var collectionRef = FirebaseFirestore.instance.collection("apiIngredients");
 
 Future saveToFirebase(Ingredient data, String imgURL, String uniqueKey) async {
   Map<String, dynamic> food = {
-    "createdDate": DateFormat("H:mm, d/M/yyyy").format(DateTime.now()),
+    "DateTime": DateFormat("H:mm, d/M/yyyy").format(DateTime.now()),
     "dishId": data.dish_id,
     "foodName": data.foodName,
     "hasRecipe": data.hasRecipe,
@@ -18,14 +18,11 @@ Future saveToFirebase(Ingredient data, String imgURL, String uniqueKey) async {
     "recipe": data.recipe?.map((v) => v.toJson()).toList(),
     "source": data.source,
     "url": imgURL,
-    "createdTime": DateFormat("d/M/yyyy").format(DateTime.now()),
-     "url": imgURL
+    "createdDate": DateFormat("d/M/yyyy").format(DateTime.now()),
   };
-  //collectionRef.add(food);
   await collectionRef.doc("$uniqueKey").set(food);
-  print("FOOD ADDED!");
+  print("FOOD 🔥 SAVED!");
 }
-
 
 Future<String> uploadFireImage(String imagePath) async {
   Reference db1 =
@@ -50,6 +47,10 @@ Future<List<dynamic>?> getRecipeById(String uniqueKey) async {
   return docSnap.data()?.recipe;
 }
 
-
-
-
+updateRecipe(String uniqueKey, List? value) async {
+  return await collectionRef
+      .doc(uniqueKey)
+      .update({'recipe': value})
+      .then((_) => print('Updated'))
+      .catchError((error) => print('Update failed: $error'));
+}
