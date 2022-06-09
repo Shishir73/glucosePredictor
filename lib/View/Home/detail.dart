@@ -26,16 +26,17 @@ class DetailPage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height - 500,
-                child: Image.network(
-                  ingredients["url"],
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+                padding: const EdgeInsets.fromLTRB(3.0, 10.0, 3.0, 3.0),
+                child: Container(
+                    width: MediaQuery.of(context).size.width - 70,
+                    height: MediaQuery.of(context).size.height - 500,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25.0),
+                      image: DecorationImage(
+                        image: NetworkImage(ingredients["url"]),
+                        fit: BoxFit.cover,
+                      ),
+                    ))),
             Flexible(
               child: ListView.builder(
                   shrinkWrap: true,
@@ -46,8 +47,10 @@ class DetailPage extends StatelessWidget {
                       title: Text(
                         ingredients["recipe"][index]["name"],
                       ),
-                      subtitle: Text('Quantity ${ingredients["recipe"][index]["weight"]}g'),
-                      trailing: Text('Carbs ${ingredients["recipe"][index]["carbs"]}g'),
+                      subtitle: Text(
+                          'Quantity ${ingredients["recipe"][index]["weight"]}g'),
+                      trailing: Text(
+                          'Carbs ${ingredients["recipe"][index]["carbs"]}g'),
                     );
                   }),
             ),
