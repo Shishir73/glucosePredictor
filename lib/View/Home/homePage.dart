@@ -67,6 +67,33 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                         builder: (context) => const DraftPageView()));
               },
             ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: const Icon(
+                  Icons.calendar_today,
+                  color: Colors.black,
+                ),
+                tooltip: 'pick date',
+                onPressed: () {
+                  DatePicker.showDatePicker(context,
+                      showTitleActions: true,
+                      minTime: DateTime(2018, 03, 5),
+                      maxTime: DateTime(2026, 06, 7), onChanged: (date) {
+                        print('change $date');
+                        setState(() {
+                          pickeddate = "${date.day}";
+                        });
+                      }, onConfirm: (date) {
+                        print('confirm $date');
+                        setState(() {
+                          pickeddate = "${date.day}/${date.month}/${date.year}";
+                          _buildFireView1();
+                        });
+                      }, currentTime: DateTime.now(), locale: LocaleType.en);
+                },
+              ),
+            ),
           ]),
       body: Center(
         child: Column(
