@@ -45,11 +45,9 @@ class DetailPage extends StatelessWidget {
                     return ListTile(
                       title: Text(
                         ingredients["recipe"][index]["name"],
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
                       ),
+                      subtitle: Text('Quantity ${ingredients["recipe"][index]["weight"]}g'),
+                      trailing: Text('Carbs ${ingredients["recipe"][index]["carbs"]}g'),
                     );
                   }),
             ),

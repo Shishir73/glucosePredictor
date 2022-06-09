@@ -191,11 +191,11 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                           subtitle:
                               Text("${offData.docs[index]["dateTime"]}"),
                           onTap: () {
-                            var index1 = offData.docs[index];
+                            var imgItem = offData.docs[index];
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DetailPage(index1)));
+                                    builder: (context) => DetailPage(imgItem)));
                           });
                     },
                   );
