@@ -88,7 +88,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                         print('confirm $date');
                         setState(() {
                           pickeddate = "${date.day}/${date.month}/${date.year}";
-                          _buildFireView1();
+                          _buildDateView();
                         });
                       }, currentTime: DateTime.now(), locale: LocaleType.en);
                 },
@@ -97,12 +97,13 @@ class _HomeTimelineView extends State<HomeTimelineView> {
           ]),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(child: _buildFireView()),
-            const SizedBox(width: 20, height: 45),
-          ],
-        ),
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              if (pickeddate != null) Expanded(child: _buildDateView()),
+              const SizedBox(width: 20, height: 45),
+              if (pickeddate == null) Expanded(child: _buildFireView()),
+              const SizedBox(width: 20, height: 45),
+            ]),
       ),
     );
   }
@@ -139,7 +140,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                           width: 120,
                         ),
                         title: Text("${offData.docs[index]["foodName"]}"),
-                        subtitle: Text("${offData.docs[index]["DateTime"]}"),
+                        subtitle: Text("${offData.docs[index]["dateTime"]}"),
                         onTap: () {
                           var index1 = offData.docs[index];
                           Navigator.push(
@@ -153,7 +154,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                 })));
   }
 
-  Widget _buildFireView1() {
+  Widget _buildDateView() {
     final Stream<QuerySnapshot> fireData = FirebaseFirestore.instance
         .collection("apiIngredients")
         .where('createdDate', isEqualTo: pickeddate.toString())
