@@ -189,7 +189,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                           ),
                           title: Text("${offData.docs[index]["foodName"]}"),
                           subtitle:
-                              Text("${offData.docs[index]["createdDate"]}"),
+                              Text("${offData.docs[index]["dateTime"]}"),
                           onTap: () {
                             var index1 = offData.docs[index];
                             Navigator.push(
