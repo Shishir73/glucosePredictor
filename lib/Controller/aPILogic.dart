@@ -6,11 +6,11 @@ import 'package:http/http.dart' as http;
 
 var tokenIndex = 0;
 var token = [
-  "06dd8599ea3b634ff4469b9119993d9e31c991d5",
-  "3936ab98bf4c0354c5bdaf22f76cf4ddd7563d62",
-  "b9eda5673c06d114c54537235bca423746a42625",
-  "12a8b5ea967c6b7e65c63e000174de5649e80363",
-  "0853d94a13b49cab28c8822156da7e2839831670",
+  "8653489f5fda954ca16f485158be3120176fe8cd",
+  "040de939a3ef5ca4a11fc66784f09805e80a8f5d",
+  "d54ac72571c8c101ee36d932a712ef18425644f6",
+  "10a9027cb4ee1c7e45f517f780fd60345baebb71",
+  "8119373f1bf96a69f5b64b738260a000fe213ad5",
 ];
 
 Future<Ingredient> getDataFromImage(Uint8List imageFile) async {
