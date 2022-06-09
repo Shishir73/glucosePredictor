@@ -22,11 +22,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+
   runApp(const GlucoseApp());
 }
 
 class GlucoseApp extends StatelessWidget {
   const GlucoseApp({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class GlucoseApp extends StatelessWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int index = 0;
+
 
   final screens = [
     const HomePage(),
