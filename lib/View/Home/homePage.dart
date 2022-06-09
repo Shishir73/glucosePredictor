@@ -80,17 +80,17 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                       showTitleActions: true,
                       minTime: DateTime(2018, 03, 5),
                       maxTime: DateTime(2026, 06, 7), onChanged: (date) {
-                        print('change $date');
-                        setState(() {
-                          pickeddate = "${date.day}";
-                        });
-                      }, onConfirm: (date) {
-                        print('confirm $date');
-                        setState(() {
-                          pickeddate = "${date.day}/${date.month}/${date.year}";
-                          _buildDateView();
-                        });
-                      }, currentTime: DateTime.now(), locale: LocaleType.en);
+                    print('change $date');
+                    setState(() {
+                      pickeddate = "${date.day}";
+                    });
+                  }, onConfirm: (date) {
+                    print('confirm $date');
+                    setState(() {
+                      pickeddate = "${date.day}/${date.month}/${date.year}";
+                      _buildDateView();
+                    });
+                  }, currentTime: DateTime.now(), locale: LocaleType.en);
                 },
               ),
             ),
@@ -100,23 +100,22 @@ class _HomeTimelineView extends State<HomeTimelineView> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               if (pickeddate != null) Expanded(child: _buildDateView()),
-              const SizedBox(width: 20, height: 45),
               if (pickeddate == null) Expanded(child: _buildFireView()),
-              const SizedBox(width: 20, height: 45),
             ]),
       ),
     );
   }
 
   Widget _buildFireView() {
-    final Stream<QuerySnapshot> fireData =
-        FirebaseFirestore.instance.collection("apiIngredients").snapshots();
+    final Stream<QuerySnapshot> fireData = FirebaseFirestore.instance
+        .collection("apiIngredients")
+        .orderBy('createdDate', descending: true)
+        .snapshots();
     return Align(
-        alignment: Alignment.topLeft,
+        alignment: Alignment.topCenter,
         child: Container(
-            width: 300,
-            height: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            width: MediaQuery.of(context).size.width - 20,
+            height: MediaQuery.of(context).size.height - 130,
             child: StreamBuilder<QuerySnapshot>(
                 stream: fireData,
                 builder: (
@@ -132,21 +131,22 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                   final offData = snapshot.requireData;
                   return ListView.builder(
                     itemCount: offData.size,
-                    reverse: true,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         leading: Image.network(
                           "${offData.docs[index]["url"]}",
-                          width: 120,
                         ),
                         title: Text("${offData.docs[index]["foodName"]}"),
                         subtitle: Text("${offData.docs[index]["dateTime"]}"),
+                        trailing: const Icon(
+                          Icons.more_horiz,
+                        ),
                         onTap: () {
-                          var index1 = offData.docs[index];
+                          var imgItem = offData.docs[index];
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DetailPage(index1)));
+                                  builder: (context) => DetailPage(imgItem)));
                         },
                       );
                     },
@@ -161,11 +161,10 @@ class _HomeTimelineView extends State<HomeTimelineView> {
         .snapshots();
     print(fireData);
     return Align(
-        alignment: Alignment.topLeft,
+        alignment: Alignment.topCenter,
         child: Container(
-            width: 300,
-            height: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            width: MediaQuery.of(context).size.width - 20,
+            height: MediaQuery.of(context).size.height - 130,
             child: StreamBuilder<QuerySnapshot>(
                 stream: fireData,
                 builder: (
@@ -185,11 +184,12 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                       return ListTile(
                           leading: Image.network(
                             "${offData.docs[index]["url"]}",
-                            width: 120,
                           ),
                           title: Text("${offData.docs[index]["foodName"]}"),
-                          subtitle:
-                              Text("${offData.docs[index]["dateTime"]}"),
+                          subtitle: Text("${offData.docs[index]["dateTime"]}"),
+                          trailing: const Icon(
+                            Icons.more_horiz,
+                          ),
                           onTap: () {
                             var imgItem = offData.docs[index];
                             Navigator.push(
