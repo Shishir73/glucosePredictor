@@ -68,21 +68,38 @@ class _EditPageState extends State<EditScreen> {
               )),
         ),
         _createHeaders(),
-        Flexible(flex: 5, child: _createSliderWidget()),
+        Flexible(child: _createSliderWidget()),
         Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-            child: Container(
-              child: FormHelper.submitButton(
-                "Save",
-                () async {
-                  print(_futureRecipe.toString());
-                  _recipesValue = await _futureRecipe;
-                  _updateFireData(context, uniqueKey, _recipesValue);
-                  print("DOG. 🐶 DONE!");
-                },
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 14.0),
+                  primary: Colors.transparent,
+                  shape: const StadiumBorder(),
+                ),
+                onPressed: (){
+                  _addIng(context);
+                  },
+                child: const Text(
+                  "+ Add Ingredient",
+                  style: TextStyle(color: Colors.white, fontSize: 17),
+                ),
               ),
-            )),
-      ])),
+              const Spacer(),
+              Container(
+                  child: FormHelper.submitButton(
+                    "Save",
+                        () async {
+                      print(_futureRecipe.toString());
+                      _recipesValue = await _futureRecipe;
+                      _updateFireData(context, uniqueKey, _recipesValue);
+                      print("DOG. 🐶 DONE!");
+                    },
+                  )),
+            ]),
+        )])),
     );
   }
 
@@ -217,10 +234,27 @@ class _EditPageState extends State<EditScreen> {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const MyHomePage(title: 'Predict Glucose')),
+                  MaterialPageRoute(builder: (context) => const GlucoseApp()),
                   (route) => false);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  _addIng(BuildContext context){
+    return showPlatformDialog(
+      context: context,
+      builder: (_) => BasicDialogAlert(
+        title: const Text("🍕Add New Ingredient"),
+        content: const Text(
+            "This feature is coming soon 😉\nJust a sneak peak here 😁"),
+        actions: <Widget>[
+          BasicDialogAction(
+            title: const Text("OK"),
+            onPressed: () {
+              Navigator.pop(context);
             },
           ),
         ],

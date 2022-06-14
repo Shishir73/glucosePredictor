@@ -109,7 +109,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
   Widget _buildFireView() {
     final Stream<QuerySnapshot> fireData = FirebaseFirestore.instance
         .collection("apiIngredients")
-        .orderBy('createdDate', descending: true)
+        .orderBy('createdDate')
         .snapshots();
     return Align(
         alignment: Alignment.topCenter,

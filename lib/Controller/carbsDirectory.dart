@@ -7,11 +7,13 @@ getCarbs() {
     "apple": 0.143,
     "asparagus": 0.049,
     "artichoke": 0.105,
+    "avocado": 0.0,
 
     // B
     "banana": 0.226,
     "broccoli": 0.063,
     "butter": 0.012,
+    "bread":0.0,
 
     // C
     "cabbage": 0.073,
