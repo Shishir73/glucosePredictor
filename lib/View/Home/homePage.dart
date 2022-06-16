@@ -56,7 +56,8 @@ class _HomeTimelineView extends State<HomeTimelineView> {
           actions: <Widget>[
             IconButton(
               icon: const Icon(
-                Icons.watch_later_outlined,
+                Icons.history_outlined,
+                // Icons.watch_later_outlined,
                 color: Colors.black,
               ),
               tooltip: 'Quick Saved Meal',
@@ -109,7 +110,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
   Widget _buildFireView() {
     final Stream<QuerySnapshot> fireData = FirebaseFirestore.instance
         .collection("apiIngredients")
-        .orderBy('createdDate')
+        .orderBy('ts', descending: true)
         .snapshots();
     return Align(
         alignment: Alignment.topCenter,

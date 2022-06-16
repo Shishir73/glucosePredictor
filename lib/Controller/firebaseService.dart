@@ -11,6 +11,7 @@ var collectionRef = FirebaseFirestore.instance.collection("apiIngredients");
 Future saveToFirebase(Ingredient data, String imgURL, String uniqueKey) async {
   Map<String, dynamic> food = {
     "dateTime": DateFormat("H:mm, d/M/yyyy").format(DateTime.now()),
+    "ts": DateTime.now().millisecondsSinceEpoch,
     "dishId": data.dish_id,
     "foodName": data.foodName,
     "hasRecipe": data.hasRecipe,

@@ -31,7 +31,7 @@ class _ManualPageView extends State<ManualPageView> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: const Text("Quick Saved",
+          title: const Text("Manual Input",
               style: TextStyle(color: Color(0xff909090))),
           centerTitle: true,
           elevation: 0,
