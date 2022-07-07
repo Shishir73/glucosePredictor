@@ -163,10 +163,13 @@ class _HomeTimelineView extends State<HomeTimelineView> {
     print(fireData);
     return Align(
         alignment: Alignment.topCenter,
-        child: Container(
-            width: MediaQuery.of(context).size.width - 20,
-            height: MediaQuery.of(context).size.height - 130,
-            child: StreamBuilder<QuerySnapshot>(
+        child: Column(
+          children: [
+            Text("Meal Saved on: "+pickeddate.toString()),
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 20,
+              height: MediaQuery.of(context).size.height - 130,
+              child: StreamBuilder<QuerySnapshot>(
                 stream: fireData,
                 builder: (
                   BuildContext context,
@@ -200,6 +203,7 @@ class _HomeTimelineView extends State<HomeTimelineView> {
                           });
                     },
                   );
-                })));
+                }))],
+    ));
   }
 }
